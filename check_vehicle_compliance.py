@@ -20,6 +20,7 @@ def check_vehicle_mot(license_plate: str) -> dict:
     payload = {
         "registration": license_plate.upper().replace(" ", "")
     }
+    print(f"Checking MOT for license plate: {license_plate}")
     
     try:
         response = requests.post(url, json=payload, headers=headers, timeout=5)

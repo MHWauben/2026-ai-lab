@@ -1,4 +1,5 @@
 import os
+from turtle import pos
 
 import dash
 import requests
@@ -43,10 +44,6 @@ def build_check_card(title, check_data, pos = []):
     status = check_data.get("status", "UNKNOWN")
     details = check_data.get("details", {})
     reason = check_data.get("reason")
-    if is_point_in_geofence(pos.get("lat"), pos.get("lon"), details.get("polygon")):
-        location_check = "Yes"
-    else:
-        location_check = "No"
 
     rows = []
     if title == "Registration":
@@ -70,6 +67,10 @@ def build_check_card(title, check_data, pos = []):
             rows.append(("Location", f"{loc.get('lat')}, {loc.get('lng')}"))
         rows.append(("Zone", details.get("zoneName")))
         rows.append(("Zone active", details.get("zoneActive")))
+        if is_point_in_geofence(pos.get("lat"), pos.get("lon"), loc.get("polygon")):
+            location_check = "Yes"
+        else:
+            location_check = "No"
         rows.append(("In geofenced area", location_check))
 
 

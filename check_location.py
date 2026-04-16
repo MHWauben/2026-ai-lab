@@ -47,8 +47,6 @@ def is_point_in_geofence(latitude, longitude, polygon):
     Returns:
         bool: True if point is within geofence, False otherwise
     """
-    if _geofence_polygon is None:
-        raise ValueError("Call load_geofence_data() first.")
     
     point = Point(longitude, latitude)
     

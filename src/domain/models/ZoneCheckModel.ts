@@ -1,8 +1,9 @@
 import type { CheckStatus } from '@domain/enums/CheckStatus.enum';
-import type { Location } from '@domain/models/LocationModel';
+import type { GeoPolygon, Location } from '@domain/models/LocationModel';
 
 export interface ZoneDetails {
 	location: Location;
+	polygon: GeoPolygon;
 	zoneName: string | null;
 	zoneActive: boolean;
 }

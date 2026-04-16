@@ -30,6 +30,16 @@ export const MOCK_VEHICLES: Record<string, VehicleRecord> = {
 			location: { lat: 51.5054, lng: -0.0235 },
 			zoneName: 'Canary Wharf AV Zone',
 			zoneActive: true,
+			polygon: {
+				type: 'Polygon',
+				coordinates: [[
+					[-0.0300, 51.5020],
+					[-0.0170, 51.5020],
+					[-0.0170, 51.5090],
+					[-0.0300, 51.5090],
+					[-0.0300, 51.5020],
+				]],
+			},
 		},
 	},
 	AV02ABC: {
@@ -53,6 +63,16 @@ export const MOCK_VEHICLES: Record<string, VehicleRecord> = {
 			location: { lat: 51.5054, lng: -0.0235 },
 			zoneName: 'Canary Wharf AV Zone',
 			zoneActive: true,
+			polygon: {
+				type: 'Polygon',
+				coordinates: [[
+					[-0.0300, 51.5020],
+					[-0.0170, 51.5020],
+					[-0.0170, 51.5090],
+					[-0.0300, 51.5090],
+					[-0.0300, 51.5020],
+				]],
+			},
 		},
 	},
 	AV03DEF: {
@@ -76,6 +96,16 @@ export const MOCK_VEHICLES: Record<string, VehicleRecord> = {
 			location: { lat: 51.4613, lng: -0.1156 },
 			zoneName: null,
 			zoneActive: false,
+			polygon: {
+				type: 'Polygon',
+				coordinates: [[
+					[-0.1220, 51.4580],
+					[-0.1090, 51.4580],
+					[-0.1090, 51.4650],
+					[-0.1220, 51.4650],
+					[-0.1220, 51.4580],
+				]],
+			},
 		},
 	},
 	AV04GHI: {
@@ -99,6 +129,16 @@ export const MOCK_VEHICLES: Record<string, VehicleRecord> = {
 			location: { lat: 51.5085, lng: -0.0762 },
 			zoneName: 'Olympic Park AV Zone',
 			zoneActive: true,
+			polygon: {
+				type: 'Polygon',
+				coordinates: [[
+					[-0.0830, 51.5050],
+					[-0.0690, 51.5050],
+					[-0.0690, 51.5120],
+					[-0.0830, 51.5120],
+					[-0.0830, 51.5050],
+				]],
+			},
 		},
 	},
 	AV05JKL: {
@@ -122,6 +162,16 @@ export const MOCK_VEHICLES: Record<string, VehicleRecord> = {
 			location: { lat: 51.5133, lng: -0.1371 },
 			zoneName: null,
 			zoneActive: false,
+			polygon: {
+				type: 'Polygon',
+				coordinates: [[
+					[-0.1440, 51.5100],
+					[-0.1300, 51.5100],
+					[-0.1300, 51.5170],
+					[-0.1440, 51.5170],
+					[-0.1440, 51.5100],
+				]],
+			},
 		},
 	},
 	AV06MNO: {
@@ -145,6 +195,16 @@ export const MOCK_VEHICLES: Record<string, VehicleRecord> = {
 			location: { lat: 51.47, lng: -0.4543 },
 			zoneName: 'Heathrow Airport AV Zone',
 			zoneActive: true,
+			polygon: {
+				type: 'Polygon',
+				coordinates: [[
+					[-0.4620, 51.4650],
+					[-0.4460, 51.4650],
+					[-0.4460, 51.4750],
+					[-0.4620, 51.4750],
+					[-0.4620, 51.4650],
+				]],
+			},
 		},
 	},
 };

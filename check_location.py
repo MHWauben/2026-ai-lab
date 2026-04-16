@@ -18,20 +18,21 @@ def load_geofence_data(geofence_folder="geofence-data"):
     global _geofence_polygon
     
     folder_path = Path(geofence_folder)
-    geometries = []
+
+    whole_london = gpd.read_file(folder_path / "gla-boundary.zip")
+
     
     # Load all .gpkg and .shp files
-    for file_path in folder_path.glob("*.gpkg"):
-        gpkg_gdf = gpd.read_file(file_path)
-        geometries.extend(gpkg_gdf.geometry.tolist())
-
-    # Not working for some reason, skip for now!
-    for file_path in folder_path.glob("*.shp"):
-        shp_gdf = gpd.read_file(file_path)
-        geometries.extend(shp_gdf.geometry.tolist())
+    geometries = []
+    for extension in ["*.gpkg", "*.shp"]:
+        for file_path in folder_path.glob(extension):
+            gdf = gpd.read_file(file_path)
+            geometries.extend(gdf.geometry.tolist())
     
     # Combine all geometries into a single polygon
-    _geofence_polygon = unary_union(geometries)
+    hole_polygon = unary_union(geometries)
+
+    _geofence_polygon = whole_london.geometry[0].difference(hole_polygon)
     return _geofence_polygon
 
 

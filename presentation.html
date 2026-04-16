@@ -611,49 +611,7 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     SLIDE 9 — Architecture
-     ═══════════════════════════════════════════════════════ -->
-<section class="slide-mid" data-transition="slide">
-  <div class="crown-bar"></div>
-  <h2>Architecture</h2>
-
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:0.5rem; align-items:start;">
-    <div>
-      <p style="font-size:0.44em; color:var(--gov-yellow); font-weight:700; margin-bottom:0.4em;">TypeScript API</p>
-      <ul style="font-size:0.42em; color:#ccc; line-height:1.7;">
-        <li><strong>Express</strong> + <code>routing-controllers</code> (decorator routing)</li>
-        <li><strong>TypeDI</strong> dependency injection</li>
-        <li><strong>AWS Lambda</strong> via Serverless Framework</li>
-        <li><strong>AWS Powertools</strong> structured logging</li>
-        <li><strong>Zod</strong> plate validation</li>
-        <li><strong>Biome</strong> linting · <strong>Jest + SWC</strong> tests</li>
-      </ul>
-      <br/>
-      <p style="font-size:0.44em; color:var(--gov-yellow); font-weight:700; margin-bottom:0.4em;">Python UI</p>
-      <ul style="font-size:0.42em; color:#ccc; line-height:1.7;">
-        <li><strong>Plotly Dash</strong> + GOV.UK frontend</li>
-        <li><strong>GeoPandas / Shapely</strong> geofence checks</li>
-      </ul>
-    </div>
-    <div>
-      <div style="font-size:0.4em; background:#0d1117; border-radius:8px; padding:1em; font-family:monospace; line-height:2; border:1px solid #30363d;">
-        <span style="color:#8b949e;">// Resource layer</span><br/>
-        <span style="color:#79c0ff;">ComplianceResource</span> <span style="color:#aaa;">→</span> <span style="color:#aaa;">validates plate</span><br/>
-        <span style="color:#8b949e;">&nbsp;&nbsp;↓</span><br/>
-        <span style="color:#79c0ff;">ComplianceService</span> <span style="color:#aaa;">→</span> <span style="color:#aaa;">orchestrates</span><br/>
-        <span style="color:#8b949e;">&nbsp;&nbsp;↓ Promise.all()</span><br/>
-        <span style="color:#3fb950;">RegistrationService</span><br/>
-        <span style="color:#f0883e;">OperatorService</span><br/>
-        <span style="color:#a5d6ff;">ZoneService</span><br/>
-        <span style="color:#8b949e;">&nbsp;&nbsp;↓</span><br/>
-        <span style="color:#aaa;">Providers → MockDataStore</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════
-     SLIDE 10 — What's Next
+     SLIDE 9 — What's Next
      ═══════════════════════════════════════════════════════ -->
 <section class="slide-blue" data-transition="slide">
   <div class="crown-bar"></div>
@@ -662,7 +620,7 @@
   <div class="next-grid">
     <div class="next-item">
       <div class="title">🔌 Live API Integration</div>
-      <p>Replace mock data with real DVSA Vehicle Enquiry Service API and TfL Unified API calls.</p>
+      <p>Replace mock data with real DVSA MOT History and DVLA Vehicle Enquiry Service API and TfL Unified API calls.</p>
     </div>
     <div class="next-item">
       <div class="title">🗺 Real TfL Zone Boundaries</div>
@@ -680,6 +638,27 @@
 
   <p style="font-size:0.4em; color:var(--gov-grey); margin-top:1.2rem; text-align:center;">
     Scoped to London (TfL jurisdiction) · Built under the Automated Vehicles Act 2024 c.13
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 10 — Edge Cases
+     ═══════════════════════════════════════════════════════ -->
+<section class="slide-dark" data-transition="slide">
+  <div class="crown-bar"></div>
+  <h2>Edge Cases</h2>
+
+  <p style="font-size:0.5em; color:var(--gov-yellow); font-weight:700; margin-bottom:0.6em;">Alternative Input: Imagery &amp; ANPR</p>
+  <ul style="font-size:0.42em; color:#ccc; line-height:1.8; max-width:80%; margin:0 auto; text-align:left;">
+    <li>Members of the public may not know or want to type a licence plate</li>
+    <li>Use <strong>phone camera imagery</strong> as input — snap a photo of the vehicle</li>
+    <li><strong>ANPR</strong> (Automatic Number Plate Recognition) extracts the plate automatically</li>
+    <li>Enables integration with <strong>existing CCTV / traffic camera</strong> infrastructure</li>
+    <li>Opens the door to <strong>bulk / automated compliance sweeps</strong> across zones</li>
+  </ul>
+
+  <p style="font-size:0.38em; color:rgba(255,255,255,0.5); margin-top:1.2em;">
+    Camera input lowers the barrier for public reporting and scales enforcement beyond manual checks
   </p>
 </section>
 

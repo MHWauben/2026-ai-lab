@@ -1,5 +1,4 @@
 import os
-from turtle import pos
 
 import dash
 import requests

@@ -1,6 +1,7 @@
 import dash
 from dash import dcc, html, Input, Output, State
 from check_location import load_geofence_data, is_point_in_geofence
+from check_vehicle_compliance import check_vehicle_mot
 
 load_geofence_data()
 
@@ -50,15 +51,21 @@ def check_location(n_clicks, plate, lat, lon):
     if n_clicks == 0 or not all([plate, lat, lon]):
         return "Enter all fields and click Check Location"
     
+    pl_result = check_vehicle_mot(plate)
+    if pl_result["valid_mot"]:
+        plate_text = "Vehicle has a valid MOT."
+    else:  
+        plate_text = f"Vehicle MOT status: {pl_result['status']}."
+    
     result = is_point_in_geofence(lat, lon)
     if result:
         geofence_text = "inside the geofence"
     else:
         geofence_text = "outside the geofence"
-    return f"The coordinates you gave is {geofence_text}."
+    
+    return f"{plate_text} The coordinates you gave is {geofence_text}."
 
 
 if __name__ == "__main__":
     app.run_server(debug=True)
 
-    

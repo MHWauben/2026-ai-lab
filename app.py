@@ -3,6 +3,7 @@ import os
 import dash
 import requests
 from dash import dcc, html, Input, Output, State
+from check_location import is_point_in_geofence
 
 COMPLIANCE_API_URL = os.environ.get("COMPLIANCE_API_URL", "http://localhost:3003")
 
@@ -38,10 +39,14 @@ def govuk_summary_list(rows):
     return html.Dl(className="govuk-summary-list", children=items)
 
 
-def build_check_card(title, check_data):
+def build_check_card(title, check_data, pos = []):
     status = check_data.get("status", "UNKNOWN")
     details = check_data.get("details", {})
     reason = check_data.get("reason")
+    if is_point_in_geofence(pos.get("lat"), pos.get("lon"), details.get("polygon")):
+        location_check = "Yes"
+    else:
+        location_check = "No"
 
     rows = []
     if title == "Registration":
@@ -65,6 +70,8 @@ def build_check_card(title, check_data):
             rows.append(("Location", f"{loc.get('lat')}, {loc.get('lng')}"))
         rows.append(("Zone", details.get("zoneName")))
         rows.append(("Zone active", details.get("zoneActive")))
+        rows.append(("In geofenced area", location_check))
+
 
     children = [
         html.H2(className="govuk-heading-m", children=[title, " ", govuk_tag(status)]),
@@ -85,7 +92,7 @@ def build_check_card(title, check_data):
     return html.Div(className="govuk-!-margin-bottom-6", children=children)
 
 
-def build_compliance_display(data):
+def build_compliance_display(data, pos = []):
     overall = data.get("overallStatus", "UNKNOWN")
     plate = data.get("plate", "")
     checked_at = data.get("checkedAt", "")
@@ -140,7 +147,7 @@ def build_compliance_display(data):
         result.append(html.Hr(className="govuk-section-break govuk-section-break--l govuk-section-break--visible"))
         for title, key in [("Registration", "registration"), ("Operator", "operator"), ("Zone", "zone")]:
             if key in checks:
-                result.append(build_check_card(title, checks[key]))
+                result.append(build_check_card(title, checks[key], pos))
 
     return html.Div(result)
 
@@ -288,9 +295,10 @@ def check_location(n_clicks, date, pos):
 @app.callback(
     Output("output", "children"),
     Input("submit-btn", "n_clicks"),
+    Input("geolocation", "position"),
     State("license-plate", "value"),
 )
-def check_compliance(n_clicks, plate):
+def check_compliance(n_clicks, pos, plate):
     if n_clicks == 0 or not plate:
         return ""
 
@@ -311,7 +319,7 @@ def check_compliance(n_clicks, plate):
         return error_summary("The compliance API returned an error. Try again later.")
 
     data = resp.json()
-    return build_compliance_display(data)
+    return build_compliance_display(data, pos)
 
 
 if __name__ == "__main__":

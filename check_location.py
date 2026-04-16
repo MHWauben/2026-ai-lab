@@ -26,10 +26,9 @@ def load_geofence_data(geofence_folder="geofence-data"):
         geometries.extend(gpkg_gdf.geometry.tolist())
 
     # Not working for some reason, skip for now!
-    # for file_path in folder_path.glob("*.shp"):
-    #     breakpoint()
-    #     shp_gdf = gpd.read_file(file_path)
-    #     geometries.extend(shp_gdf.geometry.tolist())
+    for file_path in folder_path.glob("*.shp"):
+        shp_gdf = gpd.read_file(file_path)
+        geometries.extend(shp_gdf.geometry.tolist())
     
     # Combine all geometries into a single polygon
     _geofence_polygon = unary_union(geometries)

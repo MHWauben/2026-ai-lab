@@ -1,0 +1,4 @@
+path-key
+\{(\s?)key(\s?)\: \s?\'value\'\s?\}|key\s?value
+computed\-class\-key
+TypeDIMock\.container\[key\]

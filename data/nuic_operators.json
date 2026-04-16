@@ -1,0 +1,526 @@
+{
+  "_metadata": {
+    "generated_date": "2026-04-16",
+    "schema_version": "1.0",
+    "source": "Synthetic data for hackathon — not real operator records",
+    "act_reference": "Automated Vehicles Act 2024 c.13",
+    "licensing_authority": "Secretary of State for Transport (via CCAV)"
+  },
+  "operators": [
+    {
+      "nuic_licence_number": "NUIC-2024-0001",
+      "company_name": "Meridian Autonomous Mobility Ltd",
+      "company_registration_number": "14821033",
+      "registered_address": {
+        "line1": "12 Jubilee Place",
+        "line2": "Canary Wharf",
+        "city": "London",
+        "postcode": "E14 5NY"
+      },
+      "licence_status": "active",
+      "licence_issue_date": "2024-09-01",
+      "licence_expiry_date": "2027-08-31",
+      "licence_conditions": [
+        "Vehicles must operate within designated NUIC zones only",
+        "Real-time telemetry data to be shared with CCAV within 24 hours of any safety event",
+        "Fleet size not to exceed 80 vehicles without prior written approval"
+      ],
+      "authorised_vehicle_types": ["passenger"],
+      "tfl_private_hire_licence_number": "PHV/OP/00412",
+      "tfl_licence_status": "active",
+      "tfl_licence_expiry": "2027-08-31",
+      "responsible_person": {
+        "name": "Dr Priya Nair",
+        "email": "p.nair@meridian-am.co.uk",
+        "phone": "+44 20 7946 0112"
+      },
+      "insurance_policy_ref": "AXA-NUIC-2024-88231",
+      "insurer": "AXA Commercial UK",
+      "insurance_expiry": "2027-08-31",
+      "fleet_size": 48,
+      "operational_zones": ["AVZONE-001", "AVZONE-004", "AVZONE-005"],
+      "av_type_approvals": ["UKAV-2024-001", "UKAV-2024-007"],
+      "data_ethics_approval": "DEA-CCAV-2024-019",
+      "last_audit_date": "2025-11-14",
+      "next_audit_due": "2026-11-14",
+      "notes": "First NUIC operator to receive a licence under the AV Act 2024. Operates Wayve-developed software stack."
+    },
+    {
+      "nuic_licence_number": "NUIC-2024-0002",
+      "company_name": "ClearRoute Technologies Ltd",
+      "company_registration_number": "14905572",
+      "registered_address": {
+        "line1": "One Canada Square",
+        "line2": "Floor 28",
+        "city": "London",
+        "postcode": "E14 5AB"
+      },
+      "licence_status": "active",
+      "licence_issue_date": "2024-10-15",
+      "licence_expiry_date": "2027-10-14",
+      "licence_conditions": [
+        "Passenger manifests to be retained for 12 months",
+        "Annual third-party safety audit required"
+      ],
+      "authorised_vehicle_types": ["passenger", "mixed"],
+      "tfl_private_hire_licence_number": "PHV/OP/00438",
+      "tfl_licence_status": "active",
+      "tfl_licence_expiry": "2027-10-14",
+      "responsible_person": {
+        "name": "James Whitmore",
+        "email": "j.whitmore@clearroute.tech",
+        "phone": "+44 20 7946 0231"
+      },
+      "insurance_policy_ref": "ZURICH-COM-2024-114490",
+      "insurer": "Zurich Insurance plc",
+      "insurance_expiry": "2027-10-14",
+      "fleet_size": 32,
+      "operational_zones": ["AVZONE-001", "AVZONE-003", "AVZONE-008"],
+      "av_type_approvals": ["UKAV-2024-003"],
+      "data_ethics_approval": "DEA-CCAV-2024-024",
+      "last_audit_date": "2025-10-08",
+      "next_audit_due": "2026-10-08",
+      "notes": null
+    },
+    {
+      "nuic_licence_number": "NUIC-2024-0003",
+      "company_name": "Alba Autonomy Services Ltd",
+      "company_registration_number": "SC751204",
+      "registered_address": {
+        "line1": "45 Harbour Exchange Square",
+        "line2": "",
+        "city": "London",
+        "postcode": "E14 9GE"
+      },
+      "licence_status": "active",
+      "licence_issue_date": "2024-11-20",
+      "licence_expiry_date": "2027-11-19",
+      "licence_conditions": [
+        "Delivery operations restricted to 07:00-21:00 within AVZONE-007"
+      ],
+      "authorised_vehicle_types": ["delivery"],
+      "tfl_private_hire_licence_number": null,
+      "tfl_licence_status": null,
+      "tfl_licence_expiry": null,
+      "responsible_person": {
+        "name": "Fiona Mackenzie",
+        "email": "f.mackenzie@alba-autonomy.co.uk",
+        "phone": "+44 131 946 0044"
+      },
+      "insurance_policy_ref": "RSA-CARGO-2024-77820",
+      "insurer": "RSA Insurance Group",
+      "insurance_expiry": "2027-11-19",
+      "fleet_size": 18,
+      "operational_zones": ["AVZONE-007"],
+      "av_type_approvals": ["UKAV-2024-005"],
+      "data_ethics_approval": "DEA-CCAV-2024-031",
+      "last_audit_date": "2025-09-22",
+      "next_audit_due": "2026-09-22",
+      "notes": "Delivery-only operator. No TfL PHV licence required for non-passenger operations."
+    },
+    {
+      "nuic_licence_number": "NUIC-2025-0004",
+      "company_name": "NovaDrive Passenger Services Ltd",
+      "company_registration_number": "15102398",
+      "registered_address": {
+        "line1": "3 More London Riverside",
+        "line2": "",
+        "city": "London",
+        "postcode": "SE1 2RE"
+      },
+      "licence_status": "active",
+      "licence_issue_date": "2025-02-01",
+      "licence_expiry_date": "2028-01-31",
+      "licence_conditions": [
+        "All vehicles must carry accessible design certification",
+        "Minimum 20% of fleet to meet PSVAR 2000 wheelchair accessibility standards"
+      ],
+      "authorised_vehicle_types": ["passenger"],
+      "tfl_private_hire_licence_number": "PHV/OP/00491",
+      "tfl_licence_status": "active",
+      "tfl_licence_expiry": "2028-01-31",
+      "responsible_person": {
+        "name": "Samuel Okafor",
+        "email": "s.okafor@novadrive.co.uk",
+        "phone": "+44 20 7946 0788"
+      },
+      "insurance_policy_ref": "AVIVA-PHV-2025-20918",
+      "insurer": "Aviva Insurance Limited",
+      "insurance_expiry": "2028-01-31",
+      "fleet_size": 25,
+      "operational_zones": ["AVZONE-004", "AVZONE-005", "AVZONE-010"],
+      "av_type_approvals": ["UKAV-2025-002"],
+      "data_ethics_approval": "DEA-CCAV-2025-004",
+      "last_audit_date": "2026-01-10",
+      "next_audit_due": "2027-01-10",
+      "notes": "Zone AVZONE-010 currently suspended — vehicles re-routed to AVZONE-005."
+    },
+    {
+      "nuic_licence_number": "NUIC-2025-0005",
+      "company_name": "Helio Robotics Transport Ltd",
+      "company_registration_number": "15188401",
+      "registered_address": {
+        "line1": "Terminal 2 Business Centre",
+        "line2": "Heathrow Airport",
+        "city": "Hounslow",
+        "postcode": "TW6 1EW"
+      },
+      "licence_status": "active",
+      "licence_issue_date": "2025-01-15",
+      "licence_expiry_date": "2028-01-14",
+      "licence_conditions": [
+        "Operations limited to landside areas of Heathrow",
+        "Must comply with HAL AV Vehicle Access Protocol v2.1"
+      ],
+      "authorised_vehicle_types": ["passenger", "mixed"],
+      "tfl_private_hire_licence_number": "PHV/OP/00478",
+      "tfl_licence_status": "active",
+      "tfl_licence_expiry": "2028-01-14",
+      "responsible_person": {
+        "name": "Amara Patel",
+        "email": "a.patel@helio-robotics.co.uk",
+        "phone": "+44 20 8759 0034"
+      },
+      "insurance_policy_ref": "LLOYDS-NUIC-2025-39912",
+      "insurer": "Lloyd's of London Syndicate 5820",
+      "insurance_expiry": "2028-01-14",
+      "fleet_size": 55,
+      "operational_zones": ["AVZONE-002"],
+      "av_type_approvals": ["UKAV-2024-009", "UKAV-2025-001"],
+      "data_ethics_approval": "DEA-CCAV-2025-001",
+      "last_audit_date": "2026-01-20",
+      "next_audit_due": "2027-01-20",
+      "notes": "Largest single-zone operator. Serves all four Heathrow terminals under HAL concession."
+    },
+    {
+      "nuic_licence_number": "NUIC-2025-0006",
+      "company_name": "VectorMile Freight Autonomy Ltd",
+      "company_registration_number": "15221087",
+      "registered_address": {
+        "line1": "Unit 4, Silvertown Business Park",
+        "line2": "Silvertown Way",
+        "city": "London",
+        "postcode": "E16 2AA"
+      },
+      "licence_status": "active",
+      "licence_issue_date": "2025-04-01",
+      "licence_expiry_date": "2028-03-31",
+      "licence_conditions": [
+        "Delivery vehicles must not exceed 500kg gross vehicle weight",
+        "Night-time operations (22:00-06:00) require pre-approval from TfL"
+      ],
+      "authorised_vehicle_types": ["delivery"],
+      "tfl_private_hire_licence_number": null,
+      "tfl_licence_status": null,
+      "tfl_licence_expiry": null,
+      "responsible_person": {
+        "name": "Leon Fischer",
+        "email": "l.fischer@vectormile.co.uk",
+        "phone": "+44 20 7946 1122"
+      },
+      "insurance_policy_ref": "NFU-CARGO-2025-58811",
+      "insurer": "NFU Mutual",
+      "insurance_expiry": "2028-03-31",
+      "fleet_size": 22,
+      "operational_zones": ["AVZONE-003", "AVZONE-008"],
+      "av_type_approvals": ["UKAV-2025-004"],
+      "data_ethics_approval": "DEA-CCAV-2025-009",
+      "last_audit_date": "2026-03-15",
+      "next_audit_due": "2027-03-15",
+      "notes": null
+    },
+    {
+      "nuic_licence_number": "NUIC-2025-0007",
+      "company_name": "Apex Urban Mobility Ltd",
+      "company_registration_number": "15309442",
+      "registered_address": {
+        "line1": "27 Docklands Business Centre",
+        "line2": "10-16 Tiller Road",
+        "city": "London",
+        "postcode": "E14 8PX"
+      },
+      "licence_status": "active",
+      "licence_issue_date": "2025-06-01",
+      "licence_expiry_date": "2028-05-31",
+      "licence_conditions": [
+        "Trial zone operations require separate trial consent from TfL",
+        "Quarterly safety reports to be submitted to CCAV"
+      ],
+      "authorised_vehicle_types": ["passenger"],
+      "tfl_private_hire_licence_number": "PHV/OP/00519",
+      "tfl_licence_status": "active",
+      "tfl_licence_expiry": "2028-05-31",
+      "responsible_person": {
+        "name": "Yasmin Bouchard",
+        "email": "y.bouchard@apexurban.co.uk",
+        "phone": "+44 20 7946 0555"
+      },
+      "insurance_policy_ref": "CHUBB-AV-2025-102245",
+      "insurer": "Chubb European Group SE",
+      "insurance_expiry": "2028-05-31",
+      "fleet_size": 14,
+      "operational_zones": ["AVZONE-006", "AVZONE-009"],
+      "av_type_approvals": ["UKAV-2025-003"],
+      "data_ethics_approval": "DEA-CCAV-2025-014",
+      "last_audit_date": "2025-12-01",
+      "next_audit_due": "2026-12-01",
+      "notes": "Operates only in trial zones. Application to expand to AVZONE-001 pending CCAV review."
+    },
+    {
+      "nuic_licence_number": "NUIC-2025-0008",
+      "company_name": "Orbital Passenger Systems Ltd",
+      "company_registration_number": "15388120",
+      "registered_address": {
+        "line1": "180 Great Portland Street",
+        "line2": "",
+        "city": "London",
+        "postcode": "W1W 5QZ"
+      },
+      "licence_status": "active",
+      "licence_issue_date": "2025-07-14",
+      "licence_expiry_date": "2028-07-13",
+      "licence_conditions": [
+        "Fleet must be zero-emission (BEV or FCEV) only"
+      ],
+      "authorised_vehicle_types": ["passenger"],
+      "tfl_private_hire_licence_number": "PHV/OP/00534",
+      "tfl_licence_status": "active",
+      "tfl_licence_expiry": "2028-07-13",
+      "responsible_person": {
+        "name": "Tariq Al-Rashid",
+        "email": "t.alrashid@orbital-ps.co.uk",
+        "phone": "+44 20 7946 0900"
+      },
+      "insurance_policy_ref": "HISCOX-ZEV-2025-77341",
+      "insurer": "Hiscox Insurance Company Ltd",
+      "insurance_expiry": "2028-07-13",
+      "fleet_size": 20,
+      "operational_zones": ["AVZONE-004", "AVZONE-007"],
+      "av_type_approvals": ["UKAV-2025-006"],
+      "data_ethics_approval": "DEA-CCAV-2025-018",
+      "last_audit_date": "2025-07-20",
+      "next_audit_due": "2026-07-20",
+      "notes": null
+    },
+    {
+      "nuic_licence_number": "NUIC-2025-0009",
+      "company_name": "Kinetic Autonomous Logistics Ltd",
+      "company_registration_number": "15412889",
+      "registered_address": {
+        "line1": "Unit 12, Beckton Trade Park",
+        "line2": "Woolwich Manor Way",
+        "city": "London",
+        "postcode": "E6 5NT"
+      },
+      "licence_status": "active",
+      "licence_issue_date": "2025-09-01",
+      "licence_expiry_date": "2028-08-31",
+      "licence_conditions": [
+        "All delivery routes must be pre-registered with TfL Operations",
+        "Real-time route telemetry must be shared with TfL during active operations"
+      ],
+      "authorised_vehicle_types": ["delivery"],
+      "tfl_private_hire_licence_number": null,
+      "tfl_licence_status": null,
+      "tfl_licence_expiry": null,
+      "responsible_person": {
+        "name": "Chen Wei",
+        "email": "c.wei@kinetic-al.co.uk",
+        "phone": "+44 20 7946 2002"
+      },
+      "insurance_policy_ref": "BRIT-CARGO-2025-88123",
+      "insurer": "Brit Insurance Holdings",
+      "insurance_expiry": "2028-08-31",
+      "fleet_size": 30,
+      "operational_zones": ["AVZONE-003", "AVZONE-008", "AVZONE-009"],
+      "av_type_approvals": ["UKAV-2025-007"],
+      "data_ethics_approval": "DEA-CCAV-2025-022",
+      "last_audit_date": "2026-02-28",
+      "next_audit_due": "2027-02-28",
+      "notes": null
+    },
+    {
+      "nuic_licence_number": "NUIC-2025-0010",
+      "company_name": "Solstice AV Networks Ltd",
+      "company_registration_number": "15490017",
+      "registered_address": {
+        "line1": "10 Gresham Street",
+        "line2": "4th Floor",
+        "city": "London",
+        "postcode": "EC2V 7JD"
+      },
+      "licence_status": "under_review",
+      "licence_issue_date": "2025-10-20",
+      "licence_expiry_date": "2028-10-19",
+      "licence_conditions": [
+        "Operations suspended pending outcome of CCAV Compliance Review CR-2026-008",
+        "No new vehicles to be added to fleet during review period"
+      ],
+      "authorised_vehicle_types": ["passenger", "mixed"],
+      "tfl_private_hire_licence_number": "PHV/OP/00562",
+      "tfl_licence_status": "active",
+      "tfl_licence_expiry": "2028-10-19",
+      "responsible_person": {
+        "name": "Natasha Brennan",
+        "email": "n.brennan@solstice-av.co.uk",
+        "phone": "+44 20 7946 3310"
+      },
+      "insurance_policy_ref": "MARKEL-AV-2025-99012",
+      "insurer": "Markel International Insurance Company",
+      "insurance_expiry": "2028-10-19",
+      "fleet_size": 17,
+      "operational_zones": ["AVZONE-001", "AVZONE-005"],
+      "av_type_approvals": ["UKAV-2025-008"],
+      "data_ethics_approval": "DEA-CCAV-2025-027",
+      "last_audit_date": "2025-10-25",
+      "next_audit_due": "2026-04-25",
+      "notes": "Under CCAV compliance review CR-2026-008 following three minor collision incidents in Q4 2025. Operations limited to AVZONE-001 daytime only."
+    },
+    {
+      "nuic_licence_number": "NUIC-2025-0011",
+      "company_name": "Horizon Shared Autonomy Ltd",
+      "company_registration_number": "15552308",
+      "registered_address": {
+        "line1": "5 Kingdom Street",
+        "line2": "Paddington Central",
+        "city": "London",
+        "postcode": "W2 6BD"
+      },
+      "licence_status": "under_review",
+      "licence_issue_date": "2025-11-01",
+      "licence_expiry_date": "2028-10-31",
+      "licence_conditions": [
+        "Licence under review — new passenger operations must not commence until review conclusion"
+      ],
+      "authorised_vehicle_types": ["passenger"],
+      "tfl_private_hire_licence_number": "PHV/OP/00578",
+      "tfl_licence_status": "active",
+      "tfl_licence_expiry": "2028-10-31",
+      "responsible_person": {
+        "name": "Oliver Greaves",
+        "email": "o.greaves@horizon-sa.co.uk",
+        "phone": "+44 20 7946 4401"
+      },
+      "insurance_policy_ref": "INTACT-AV-2025-44890",
+      "insurer": "Intact Insurance Europe",
+      "insurance_expiry": "2028-10-31",
+      "fleet_size": 8,
+      "operational_zones": ["AVZONE-004"],
+      "av_type_approvals": ["UKAV-2025-009"],
+      "data_ethics_approval": "DEA-CCAV-2025-030",
+      "last_audit_date": "2025-11-10",
+      "next_audit_due": "2026-05-10",
+      "notes": "Licence issued subject to completion of outstanding data protection audit. CCAV reviewing compliance with s.47 AV Act 2024 (data retention obligations)."
+    },
+    {
+      "nuic_licence_number": "NUIC-2025-0012",
+      "company_name": "Lynx Autonomous Transit Ltd",
+      "company_registration_number": "15601994",
+      "registered_address": {
+        "line1": "Unit 8, Charlton Industrial Estate",
+        "line2": "Anchor and Hope Lane",
+        "city": "London",
+        "postcode": "SE7 7RU"
+      },
+      "licence_status": "suspended",
+      "licence_issue_date": "2025-08-01",
+      "licence_expiry_date": "2028-07-31",
+      "licence_conditions": [
+        "SUSPENDED — all operations must cease immediately",
+        "Reinstatement requires full fleet safety inspection sign-off by DVSA-approved inspector"
+      ],
+      "authorised_vehicle_types": ["passenger"],
+      "tfl_private_hire_licence_number": "PHV/OP/00547",
+      "tfl_licence_status": "suspended",
+      "tfl_licence_expiry": "2028-07-31",
+      "responsible_person": {
+        "name": "Marcus Webb",
+        "email": "m.webb@lynx-transit.co.uk",
+        "phone": "+44 20 7946 5500"
+      },
+      "insurance_policy_ref": "RSA-NUIC-2025-33218",
+      "insurer": "RSA Insurance Group",
+      "insurance_expiry": "2028-07-31",
+      "fleet_size": 12,
+      "operational_zones": ["AVZONE-009"],
+      "av_type_approvals": ["UKAV-2025-005"],
+      "data_ethics_approval": "DEA-CCAV-2025-019",
+      "last_audit_date": "2026-01-05",
+      "next_audit_due": "2026-07-05",
+      "notes": "SUSPENDED 2026-01-05 following serious safety incident in AVZONE-009. CCAV investigation SI-2026-001 ongoing. All 12 vehicles grounded pending DVSA inspection."
+    },
+    {
+      "nuic_licence_number": "NUIC-2025-0013",
+      "company_name": "Stratos Cargo Drones & Pods Ltd",
+      "company_registration_number": "15678322",
+      "registered_address": {
+        "line1": "Innovation Hub, Royal Albert Dock",
+        "line2": "Festoon Way",
+        "city": "London",
+        "postcode": "E16 2QT"
+      },
+      "licence_status": "suspended",
+      "licence_issue_date": "2025-05-01",
+      "licence_expiry_date": "2028-04-30",
+      "licence_conditions": [
+        "SUSPENDED — failure to submit Q3 2025 safety report by deadline",
+        "Reinstatement requires submission and CCAV sign-off of outstanding reports"
+      ],
+      "authorised_vehicle_types": ["delivery"],
+      "tfl_private_hire_licence_number": null,
+      "tfl_licence_status": null,
+      "tfl_licence_expiry": null,
+      "responsible_person": {
+        "name": "Adeola Osei",
+        "email": "a.osei@stratos-cp.co.uk",
+        "phone": "+44 20 7946 6611"
+      },
+      "insurance_policy_ref": "BEAZLEY-CARGO-2025-12990",
+      "insurer": "Beazley Insurance Company",
+      "insurance_expiry": "2028-04-30",
+      "fleet_size": 9,
+      "operational_zones": ["AVZONE-008"],
+      "av_type_approvals": ["UKAV-2025-010"],
+      "data_ethics_approval": "DEA-CCAV-2025-012",
+      "last_audit_date": "2025-05-10",
+      "next_audit_due": "2026-05-10",
+      "notes": "Suspended 2025-11-01 for non-compliance with s.52 AV Act 2024 reporting obligations."
+    },
+    {
+      "nuic_licence_number": "NUIC-2024-0014",
+      "company_name": "Vanguard Street Robotics Ltd",
+      "company_registration_number": "14733019",
+      "registered_address": {
+        "line1": "Vanguard House",
+        "line2": "22 City Road",
+        "city": "London",
+        "postcode": "EC1Y 2AJ"
+      },
+      "licence_status": "revoked",
+      "licence_issue_date": "2024-09-01",
+      "licence_expiry_date": "2024-09-01",
+      "licence_conditions": [
+        "REVOKED — licence void ab initio"
+      ],
+      "authorised_vehicle_types": ["passenger"],
+      "tfl_private_hire_licence_number": "PHV/OP/00399",
+      "tfl_licence_status": "suspended",
+      "tfl_licence_expiry": null,
+      "responsible_person": {
+        "name": "Richard Dunne",
+        "email": "r.dunne@vanguard-sr.co.uk",
+        "phone": "+44 20 7946 7700"
+      },
+      "insurance_policy_ref": null,
+      "insurer": null,
+      "insurance_expiry": null,
+      "fleet_size": 0,
+      "operational_zones": [],
+      "av_type_approvals": [],
+      "data_ethics_approval": null,
+      "last_audit_date": null,
+      "next_audit_due": null,
+      "notes": "Licence revoked 2024-12-03 following CCAV finding of material misrepresentation in licence application (false AV type approval certificates submitted). Matter referred to Crown Prosecution Service. All vehicles seized by DVSA. TfL PHV licence suspended pending separate TfL review."
+    }
+  ]
+}

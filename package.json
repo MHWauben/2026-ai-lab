@@ -29,7 +29,7 @@
     "lint:fix": "bun run lint -- --write",
     "package": "bun run build -- --package",
     "secretScan": "git secrets --scan && git secrets --register-aws && git log -p --diff-filter=d -- . ':!*.json' -n 250 | scanrepo",
-    "start": "bun run clean && bun run build -- --source-map && SLS_DEBUG=* sls offline start",
+    "start": "bun run clean && bun run build -- --source-map && sls offline start",
     "start:debug": "bun run clean && bun build-service.ts --source-map && NODE_OPTIONS='--inspect' SLS_DEBUG=* sls offline start --useInProcess",
     "test": "bun run clean && jest",
     "test:coverage": "bun run test -- --coverage"

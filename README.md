@@ -20,3 +20,9 @@ Problem statement: a member of the public sees an autonomous vehicle parked in L
 - Operator registration checker: check which operator has this vehicle registered to it, and that the operator has a valid private hire license
 - AV operation location checker: check that the location of the AV is within London, but not within autonomous vehicle exclusion zones
 - User interface: an interface where users can enter a vehicle license plate and a location, and the site then returns information whether the vehicle is compliant, the operator is licensed, and the location is appropriate
+
+## Screenshots
+
+![AV Licence Checker - form](screenshot.png)
+
+![AV Licence Checker - compliance results](screenshot2.png)

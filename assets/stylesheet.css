@@ -1,96 +1,86 @@
-/* GDS Design System Styles */
+/* Dash-specific overrides — GOV.UK frontend handles all component styling */
 
-/* Typography */
+/* Remove Dash's default body/container margins */
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #0b0c0c;
+    margin: 0;
+    padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+#react-entry-point {
+    padding: 0;
+    margin: 0;
+}
+
+/* GOV.UK rebrand — header uses brand colour (#1d70b8) */
+.govuk-header {
+    background: #1d70b8;
+    border-bottom: 10px solid #1d70b8;
+    padding: 10px 0;
+}
+
+.govuk-header__container {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.govuk-header__logotype-text {
+    color: #fff;
     font-weight: 700;
-    margin-top: 0;
-    margin-bottom: 0.5em;
+    font-size: 30px;
+    line-height: 1;
+    font-family: "GDS Transport", arial, sans-serif;
 }
 
-h1 { font-size: 32px; line-height: 1.25; }
-h2 { font-size: 24px; line-height: 1.25; }
-h3 { font-size: 19px; line-height: 1.31; }
-
-p {
-    margin-top: 0;
-    margin-bottom: 1em;
-}
-
-/* Links */
-a {
-    color: #0d3142;
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 2px;
-}
-
-a:hover {
-    color: #003078;
-}
-
-a:focus {
-    outline: 3px solid #ffbf47;
-    outline-offset: 0;
-    background-color: #ffbf47;
-}
-
-/* Buttons */
-button, .button {
-    display: inline-block;
-    padding: 10px 15px;
-    background-color: #0d3142;
-    color: white;
-    border: 2px solid #0d3142;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
+.govuk-header__link:link,
+.govuk-header__link:visited {
+    color: #fff;
     text-decoration: none;
-    border-radius: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
-button:hover, .button:hover {
-    background-color: #003078;
-    border-color: #003078;
+.govuk-header__link:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: .1em;
 }
 
-button:focus, .button:focus {
-    outline: 3px solid #ffbf47;
-    outline-offset: 2px;
+/* Crown logo in header */
+.govuk-header__logotype-crown {
+    display: inline-block;
+    vertical-align: middle;
 }
 
-/* Form Elements */
-input, textarea, select {
-    font-size: 16px;
-    padding: 10px;
-    border: 2px solid #0b0c0c;
-    font-family: inherit;
+/* Service navigation bar */
+.govuk-service-navigation {
+    background: #f3f2f1;
+    border-bottom: 1px solid #b1b4b6;
 }
 
-input:focus, textarea:focus, select:focus {
-    outline: 3px solid #ffbf47;
-    outline-offset: 0;
-    border-color: #0b0c0c;
-}
-
-label {
-    display: block;
+.govuk-service-navigation__service-name {
+    font-family: "GDS Transport", arial, sans-serif;
     font-weight: 700;
-    margin-bottom: 5px;
+    font-size: 19px;
+    padding: 10px 0;
+    display: inline-block;
 }
 
-/* Spacing utilities */
-.govuk-grid-row {
-    margin-bottom: 1.5rem;
+.govuk-service-navigation__link:link,
+.govuk-service-navigation__link:visited {
+    color: #0b0c0c;
+    text-decoration: none;
 }
 
-.govuk-section-break {
-    border-top: 1px solid #b1b4b6;
-    margin: 1.5rem 0;
+/* Ensure Dash dcc.Input inherits GOV.UK input styles */
+#react-entry-point .govuk-input {
+    font-family: "GDS Transport", arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Hide Dash debug menu */
+._dash-undo-redo {
+    display: none !important;
 }

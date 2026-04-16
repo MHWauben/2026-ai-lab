@@ -6,19 +6,14 @@ from dash import dcc, html, Input, Output, State
 
 COMPLIANCE_API_URL = os.environ.get("COMPLIANCE_API_URL", "http://localhost:3003")
 
-STATUS_COLOURS = {
-    "PASS": {"bg": "#28a745", "text": "#fff"},
-    "FAIL": {"bg": "#dc3545", "text": "#fff"},
-    "NEEDS_REVIEW": {"bg": "#ffc107", "text": "#212529"},
-    "UNKNOWN": {"bg": "#6c757d", "text": "#fff"},
-}
+GOVUK_CSS = "https://cdn.jsdelivr.net/npm/govuk-frontend@5.14.0/dist/govuk/govuk-frontend.min.css"
+GOVUK_JS = "https://cdn.jsdelivr.net/npm/govuk-frontend@5.14.0/dist/govuk/govuk-frontend.min.js"
 
-CARD_STYLE = {
-    "border": "1px solid #dee2e6",
-    "borderRadius": "8px",
-    "padding": "16px",
-    "marginBottom": "12px",
-    "boxShadow": "0 1px 3px rgba(0,0,0,0.1)",
+TAG_COLOURS = {
+    "PASS": "govuk-tag--green",
+    "FAIL": "govuk-tag--red",
+    "NEEDS_REVIEW": "govuk-tag--yellow",
+    "UNKNOWN": "govuk-tag--grey",
 }
 
 
@@ -56,6 +51,7 @@ def build_check_card(title, check_data):
     details = check_data.get("details", {})
     reason = check_data.get("reason")
 
+<<<<<<< HEAD
     header = html.Div(
         [
             html.Span(
@@ -68,6 +64,9 @@ def build_check_card(title, check_data):
     )
 
     detail_rows = []
+=======
+    rows = []
+>>>>>>> e15378a (update with screenshot)
     if title == "Registration":
         make = details.get("make", "")
         model = details.get("model", "")
@@ -81,10 +80,10 @@ def build_check_card(title, check_data):
         detail_rows.append(detail_row("Insurance", details.get("insuranceStatus")))
         detail_rows.append(detail_row("Insurer", details.get("insurer")))
     elif title == "Operator":
-        detail_rows.append(detail_row("Operator", details.get("operatorName")))
-        detail_rows.append(detail_row("Licence No.", details.get("licenceNumber")))
-        detail_rows.append(detail_row("Licence Expiry", details.get("licenceExpiry")))
-        detail_rows.append(detail_row("AV Authorised", details.get("avAuthorised")))
+        rows.append(("Operator", details.get("operatorName")))
+        rows.append(("Licence number", details.get("licenceNumber")))
+        rows.append(("Licence expiry", details.get("licenceExpiry")))
+        rows.append(("AV authorised", details.get("avAuthorised")))
     elif title == "Zone":
         loc = details.get("location", {})
         if loc:
@@ -94,7 +93,6 @@ def build_check_card(title, check_data):
         detail_rows.append(detail_row("Zone", details.get("zoneName")))
         detail_rows.append(detail_row("Zone Active", details.get("zoneActive")))
 
-    children = [header] + detail_rows
     if reason:
         children.append(
             html.Div(
@@ -103,12 +101,13 @@ def build_check_card(title, check_data):
             )
         )
 
-    return html.Div(children, style=CARD_STYLE)
+    return html.Div(className="govuk-!-margin-bottom-6", children=children)
 
 
 def build_compliance_display(data):
     overall = data.get("overallStatus", "UNKNOWN")
-    colours = STATUS_COLOURS.get(overall, STATUS_COLOURS["UNKNOWN"])
+    plate = data.get("plate", "")
+    checked_at = data.get("checkedAt", "")
 
     banner = html.Div(
         [
@@ -155,10 +154,20 @@ def build_compliance_display(data):
         if key in checks:
             cards.append(build_check_card(title, checks[key]))
 
-    return html.Div([banner] + cards)
+    return html.Div(result)
 
 
-app = dash.Dash(__name__)
+def error_summary(message):
+    return html.Div(className="govuk-error-summary", children=[
+        html.Div(role="alert", children=[
+            html.H2("There is a problem", className="govuk-error-summary__title"),
+            html.Div(className="govuk-error-summary__body", children=[
+                html.Ul(className="govuk-list govuk-error-summary__list", children=[
+                    html.Li(message),
+                ]),
+            ]),
+        ]),
+    ])
 
 app.layout = html.Div(
     [
@@ -232,7 +241,7 @@ def check_location(n_clicks, date, pos):
 )
 def check_compliance(n_clicks, plate):
     if n_clicks == 0 or not plate:
-        return "Enter a license plate and click Check Compliance."
+        return ""
 
     normalised = plate.strip().replace(" ", "").upper()
 
@@ -244,14 +253,14 @@ def check_compliance(n_clicks, plate):
             style={"color": "red"},
         )
     except requests.exceptions.Timeout:
-        return html.Div("Compliance API timed out.", style={"color": "red"})
+        return error_summary("The compliance API did not respond in time.")
 
     if resp.status_code == 400:
-        errors = resp.json().get("errors", ["Invalid plate format"])
-        return html.Div(f"Invalid plate: {', '.join(errors)}", style={"color": "red"})
+        errors = resp.json().get("errors", ["Enter a valid registration number"])
+        return error_summary(errors[0])
 
     if resp.status_code >= 500:
-        return html.Div("Server error from compliance API.", style={"color": "red"})
+        return error_summary("The compliance API returned an error. Try again later.")
 
     data = resp.json()
     return build_compliance_display(data)

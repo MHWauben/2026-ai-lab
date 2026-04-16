@@ -24,14 +24,17 @@ CARD_STYLE = {
 
 def status_badge(status):
     colours = STATUS_COLOURS.get(status, STATUS_COLOURS["UNKNOWN"])
-    return html.Span(status, style={
-        "backgroundColor": colours["bg"],
-        "color": colours["text"],
-        "padding": "4px 12px",
-        "borderRadius": "4px",
-        "fontWeight": "bold",
-        "fontSize": "14px",
-    })
+    return html.Span(
+        status,
+        style={
+            "backgroundColor": colours["bg"],
+            "color": colours["text"],
+            "padding": "4px 12px",
+            "borderRadius": "4px",
+            "fontWeight": "bold",
+            "fontSize": "14px",
+        },
+    )
 
 
 def detail_row(label, value):
@@ -39,10 +42,13 @@ def detail_row(label, value):
         value = "N/A"
     if isinstance(value, bool):
         value = "Yes" if value else "No"
-    return html.Div([
-        html.Span(f"{label}: ", style={"fontWeight": "bold", "marginRight": "4px"}),
-        html.Span(str(value)),
-    ], style={"marginBottom": "4px"})
+    return html.Div(
+        [
+            html.Span(f"{label}: ", style={"fontWeight": "bold", "marginRight": "4px"}),
+            html.Span(str(value)),
+        ],
+        style={"marginBottom": "4px"},
+    )
 
 
 def build_check_card(title, check_data):
@@ -50,10 +56,16 @@ def build_check_card(title, check_data):
     details = check_data.get("details", {})
     reason = check_data.get("reason")
 
-    header = html.Div([
-        html.Span(title, style={"fontSize": "18px", "fontWeight": "bold", "marginRight": "12px"}),
-        status_badge(status),
-    ], style={"marginBottom": "12px"})
+    header = html.Div(
+        [
+            html.Span(
+                title,
+                style={"fontSize": "18px", "fontWeight": "bold", "marginRight": "12px"},
+            ),
+            status_badge(status),
+        ],
+        style={"marginBottom": "12px"},
+    )
 
     detail_rows = []
     if title == "Registration":
@@ -63,7 +75,9 @@ def build_check_card(title, check_data):
             detail_rows.append(detail_row("Vehicle", f"{make} {model}".strip()))
         detail_rows.append(detail_row("Year", details.get("year")))
         detail_rows.append(detail_row("MOT Expiry", details.get("motExpiry")))
-        detail_rows.append(detail_row("AV Type Approval", details.get("avTypeApproval")))
+        detail_rows.append(
+            detail_row("AV Type Approval", details.get("avTypeApproval"))
+        )
         detail_rows.append(detail_row("Insurance", details.get("insuranceStatus")))
         detail_rows.append(detail_row("Insurer", details.get("insurer")))
     elif title == "Operator":
@@ -74,13 +88,20 @@ def build_check_card(title, check_data):
     elif title == "Zone":
         loc = details.get("location", {})
         if loc:
-            detail_rows.append(detail_row("Location", f"{loc.get('lat')}, {loc.get('lng')}"))
+            detail_rows.append(
+                detail_row("Location", f"{loc.get('lat')}, {loc.get('lng')}")
+            )
         detail_rows.append(detail_row("Zone", details.get("zoneName")))
         detail_rows.append(detail_row("Zone Active", details.get("zoneActive")))
 
     children = [header] + detail_rows
     if reason:
-        children.append(html.Div(reason, style={"marginTop": "8px", "fontStyle": "italic", "color": "#856404"}))
+        children.append(
+            html.Div(
+                reason,
+                style={"marginTop": "8px", "fontStyle": "italic", "color": "#856404"},
+            )
+        )
 
     return html.Div(children, style=CARD_STYLE)
 
@@ -89,27 +110,48 @@ def build_compliance_display(data):
     overall = data.get("overallStatus", "UNKNOWN")
     colours = STATUS_COLOURS.get(overall, STATUS_COLOURS["UNKNOWN"])
 
-    banner = html.Div([
-        html.Div([
-            html.Span(data.get("plate", ""), style={"fontSize": "24px", "fontWeight": "bold", "marginRight": "16px"}),
-            status_badge(overall),
-        ]),
-        html.Div(f"Checked at: {data.get('checkedAt', 'N/A')}", style={"fontSize": "12px", "color": "#666", "marginTop": "4px"}),
-    ], style={
-        "backgroundColor": colours["bg"] + "1a",
-        "border": f"2px solid {colours['bg']}",
-        "borderRadius": "8px",
-        "padding": "16px",
-        "marginBottom": "16px",
-    })
+    banner = html.Div(
+        [
+            html.Div(
+                [
+                    html.Span(
+                        data.get("plate", ""),
+                        style={
+                            "fontSize": "24px",
+                            "fontWeight": "bold",
+                            "marginRight": "16px",
+                        },
+                    ),
+                    status_badge(overall),
+                ]
+            ),
+            html.Div(
+                f"Checked at: {data.get('checkedAt', 'N/A')}",
+                style={"fontSize": "12px", "color": "#666", "marginTop": "4px"},
+            ),
+        ],
+        style={
+            "backgroundColor": colours["bg"] + "1a",
+            "border": f"2px solid {colours['bg']}",
+            "borderRadius": "8px",
+            "padding": "16px",
+            "marginBottom": "16px",
+        },
+    )
 
     if overall == "UNKNOWN":
         message = data.get("message", "Vehicle not found in any register")
-        return html.Div([banner, html.P(message, style={"fontSize": "16px", "color": "#6c757d"})])
+        return html.Div(
+            [banner, html.P(message, style={"fontSize": "16px", "color": "#6c757d"})]
+        )
 
     checks = data.get("checks", {})
     cards = []
-    for title, key in [("Registration", "registration"), ("Operator", "operator"), ("Zone", "zone")]:
+    for title, key in [
+        ("Registration", "registration"),
+        ("Operator", "operator"),
+        ("Zone", "zone"),
+    ]:
         if key in checks:
             cards.append(build_check_card(title, checks[key]))
 
@@ -118,49 +160,69 @@ def build_compliance_display(data):
 
 app = dash.Dash(__name__)
 
-app.layout = html.Div([
-    html.H1("AV Compliance Checker"),
-    html.Div([
-        html.Label("License Plate:"),
-        dcc.Input(
-            id="license-plate",
-            type="text",
-            placeholder="e.g. AV01XYZ",
-            style={"marginRight": "10px", "marginLeft": "8px", "padding": "6px", "fontSize": "16px"},
+app.layout = html.Div(
+    [
+        html.H1("AV Compliance Checker"),
+        html.Div(
+            [
+                html.Label("License Plate:"),
+                dcc.Input(
+                    id="license-plate",
+                    type="text",
+                    placeholder="e.g. AV01XYZ",
+                    style={
+                        "marginRight": "10px",
+                        "marginLeft": "8px",
+                        "padding": "6px",
+                        "fontSize": "16px",
+                    },
+                ),
+                html.Br(),
+                dcc.Geolocation(id="geolocation"),
+                html.Button("Check Vehicle", id="submit-btn", n_clicks=0),
+            ]
         ),
-        html.Br(),
-        html.Label("Latitude:"),
-        dcc.Input(
-            id="latitude",
-            type="number",
-            placeholder="Enter latitude",
-            style={"marginRight": "10px"}
+        html.Label(id="location-info"),
+        html.Details(
+            [
+                html.Summary(
+                    "Demo plates",
+                    style={"cursor": "pointer", "marginTop": "12px", "color": "#666"},
+                ),
+                html.Ul(
+                    [
+                        html.Li("AV01XYZ - All checks pass"),
+                        html.Li("AV02ABC - No operator"),
+                        html.Li("AV03DEF - No operator + wrong zone"),
+                        html.Li("AV04GHI - Expired MOT"),
+                        html.Li("AV05JKL - Wrong zone"),
+                        html.Li("AV06MNO - Needs review (insurance pending)"),
+                    ],
+                    style={"fontSize": "14px", "color": "#555"},
+                ),
+            ]
         ),
-        html.Br(),
-        html.Label("Longitude:"),
-        dcc.Input(
-            id="longitude",
-            type="number",
-            placeholder="Enter longitude",
-            style={"marginRight": "10px"}
-        ),
-        html.Br(),
-        html.Br(),
-        html.Button("Check Location", id="submit-btn", n_clicks=0),
-    ]),
-    html.Details([
-        html.Summary("Demo plates", style={"cursor": "pointer", "marginTop": "12px", "color": "#666"}),
-        html.Ul([
-            html.Li("AV01XYZ - All checks pass"),
-            html.Li("AV02ABC - No operator"),
-            html.Li("AV03DEF - No operator + wrong zone"),
-            html.Li("AV04GHI - Expired MOT"),
-            html.Li("AV05JKL - Wrong zone"),
-            html.Li("AV06MNO - Needs review (insurance pending)"),
-        ], style={"fontSize": "14px", "color": "#555"}),
-    ]),
-    html.Div(id="output", style={"marginTop": "20px"}),
-], style={"fontFamily": "Arial, sans-serif", "maxWidth": "700px", "margin": "0 auto", "padding": "20px"})
+        html.Div(id="output", style={"marginTop": "20px"}),
+    ],
+    style={
+        "fontFamily": "Arial, sans-serif",
+        "maxWidth": "700px",
+        "margin": "0 auto",
+        "padding": "20px",
+    },
+)
+
+@app.callback(
+        Output("location-info", "children"),
+        Input("submit-btn", "n_clicks"),
+        Input("geolocation", "local_date"),
+        Input("geolocation", "position"),
+)
+def check_location(n_clicks, date, pos):
+    if pos is None:
+        return "Location data not available. Please allow location access and try again."
+
+    return f"As of {date} your location was: lat {pos['lat']},lon {pos['lon']}"
 
 
 @app.callback(
@@ -177,7 +239,10 @@ def check_compliance(n_clicks, plate):
     try:
         resp = requests.get(f"{COMPLIANCE_API_URL}/compliance/{normalised}", timeout=10)
     except requests.exceptions.ConnectionError:
-        return html.Div("Could not connect to the compliance API. Is it running?", style={"color": "red"})
+        return html.Div(
+            "Could not connect to the compliance API. Is it running?",
+            style={"color": "red"},
+        )
     except requests.exceptions.Timeout:
         return html.Div("Compliance API timed out.", style={"color": "red"})
 

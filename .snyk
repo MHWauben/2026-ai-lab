@@ -1,0 +1,14 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.0
+
+# Example template (The following should be placed within the 'ignore' section):
+
+SNYK-XX-YYYY-11111111:
+    - '*':
+         reason: A reason it's ignored
+         created: YYYY-MM-DDTHH:MM:SS.sssZ
+         expires: YYYY-MM-DDTHH:MM:SS.sssZ
+
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+patch: {}

@@ -1,0 +1,6 @@
+export enum ReportReason {
+	NO_OPERATOR = 'NO_OPERATOR',
+	NO_REGISTRATION = 'NO_REGISTRATION',
+	WRONG_ZONE = 'WRONG_ZONE',
+	OTHER = 'OTHER',
+}

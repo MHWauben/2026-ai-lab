@@ -4,6 +4,7 @@ import dash
 import requests
 from dash import dcc, html, Input, Output, State
 from check_location import is_point_in_geofence
+from shapely.geometry import shape
 
 COMPLIANCE_API_URL = os.environ.get("COMPLIANCE_API_URL", "http://localhost:3003")
 
@@ -33,7 +34,7 @@ def govuk_summary_list(rows):
         items.append(
             html.Div(className="govuk-summary-list__row", children=[
                 html.Dt(key, className="govuk-summary-list__key"),
-                html.Dd(str(value), className="govuk-summary-list__value"),
+                html.Dd(value if hasattr(value, 'children') else str(value), className="govuk-summary-list__value"),
             ])
         )
     return html.Dl(className="govuk-summary-list", children=items)
@@ -66,11 +67,12 @@ def build_check_card(title, check_data, pos = []):
             rows.append(("Location", f"{loc.get('lat')}, {loc.get('lng')}"))
         rows.append(("Zone", details.get("zoneName")))
         rows.append(("Zone active", details.get("zoneActive")))
-        if isinstance(pos, list):
-            if is_point_in_geofence(pos['lat'], pos['lon'], loc.get("polygon")):
-                location_check = "Yes"
+        if isinstance(pos, dict):
+            polygon_dict = details.get("polygon")
+            if polygon_dict and is_point_in_geofence(pos['lat'], pos['lon'], shape(polygon_dict)):
+                location_check = html.Span("Yes")
             else:
-                location_check = "No"
+                location_check = html.Span("No", className="govuk-tag govuk-tag--red")
             rows.append(("In geofenced area", location_check))
 
 

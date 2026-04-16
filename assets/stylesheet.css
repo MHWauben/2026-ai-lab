@@ -1,0 +1,96 @@
+/* GDS Design System Styles */
+
+/* Typography */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #0b0c0c;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
+
+h1 { font-size: 32px; line-height: 1.25; }
+h2 { font-size: 24px; line-height: 1.25; }
+h3 { font-size: 19px; line-height: 1.31; }
+
+p {
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+/* Links */
+a {
+    color: #0d3142;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+}
+
+a:hover {
+    color: #003078;
+}
+
+a:focus {
+    outline: 3px solid #ffbf47;
+    outline-offset: 0;
+    background-color: #ffbf47;
+}
+
+/* Buttons */
+button, .button {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #0d3142;
+    color: white;
+    border: 2px solid #0d3142;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 0;
+}
+
+button:hover, .button:hover {
+    background-color: #003078;
+    border-color: #003078;
+}
+
+button:focus, .button:focus {
+    outline: 3px solid #ffbf47;
+    outline-offset: 2px;
+}
+
+/* Form Elements */
+input, textarea, select {
+    font-size: 16px;
+    padding: 10px;
+    border: 2px solid #0b0c0c;
+    font-family: inherit;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: 3px solid #ffbf47;
+    outline-offset: 0;
+    border-color: #0b0c0c;
+}
+
+label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+/* Spacing utilities */
+.govuk-grid-row {
+    margin-bottom: 1.5rem;
+}
+
+.govuk-section-break {
+    border-top: 1px solid #b1b4b6;
+    margin: 1.5rem 0;
+}

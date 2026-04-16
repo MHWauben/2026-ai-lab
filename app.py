@@ -33,6 +33,7 @@ app.layout = html.Div([
             style={"marginRight": "10px"}
         ),
         html.Br(),
+        html.Br(),
         html.Button("Check Location", id="submit-btn", n_clicks=0),
     ]),
     html.Div(id="output", style={"marginTop": "20px"})

@@ -17,33 +17,25 @@ TAG_COLOURS = {
 }
 
 
-def status_badge(status):
-    colours = STATUS_COLOURS.get(status, STATUS_COLOURS["UNKNOWN"])
-    return html.Span(
-        status,
-        style={
-            "backgroundColor": colours["bg"],
-            "color": colours["text"],
-            "padding": "4px 12px",
-            "borderRadius": "4px",
-            "fontWeight": "bold",
-            "fontSize": "14px",
-        },
-    )
+def govuk_tag(status):
+    label = status.replace("_", " ")
+    return html.Strong(label, className=f"govuk-tag {TAG_COLOURS.get(status, 'govuk-tag--grey')}")
 
 
-def detail_row(label, value):
-    if value is None:
-        value = "N/A"
-    if isinstance(value, bool):
-        value = "Yes" if value else "No"
-    return html.Div(
-        [
-            html.Span(f"{label}: ", style={"fontWeight": "bold", "marginRight": "4px"}),
-            html.Span(str(value)),
-        ],
-        style={"marginBottom": "4px"},
-    )
+def govuk_summary_list(rows):
+    items = []
+    for key, value in rows:
+        if value is None:
+            value = "N/A"
+        if isinstance(value, bool):
+            value = "Yes" if value else "No"
+        items.append(
+            html.Div(className="govuk-summary-list__row", children=[
+                html.Dt(key, className="govuk-summary-list__key"),
+                html.Dd(str(value), className="govuk-summary-list__value"),
+            ])
+        )
+    return html.Dl(className="govuk-summary-list", children=items)
 
 
 def build_check_card(title, check_data):
@@ -51,34 +43,17 @@ def build_check_card(title, check_data):
     details = check_data.get("details", {})
     reason = check_data.get("reason")
 
-<<<<<<< HEAD
-    header = html.Div(
-        [
-            html.Span(
-                title,
-                style={"fontSize": "18px", "fontWeight": "bold", "marginRight": "12px"},
-            ),
-            status_badge(status),
-        ],
-        style={"marginBottom": "12px"},
-    )
-
-    detail_rows = []
-=======
     rows = []
->>>>>>> e15378a (update with screenshot)
     if title == "Registration":
         make = details.get("make", "")
         model = details.get("model", "")
         if make or model:
-            detail_rows.append(detail_row("Vehicle", f"{make} {model}".strip()))
-        detail_rows.append(detail_row("Year", details.get("year")))
-        detail_rows.append(detail_row("MOT Expiry", details.get("motExpiry")))
-        detail_rows.append(
-            detail_row("AV Type Approval", details.get("avTypeApproval"))
-        )
-        detail_rows.append(detail_row("Insurance", details.get("insuranceStatus")))
-        detail_rows.append(detail_row("Insurer", details.get("insurer")))
+            rows.append(("Vehicle", f"{make} {model}".strip()))
+        rows.append(("Year", details.get("year")))
+        rows.append(("MOT expiry", details.get("motExpiry")))
+        rows.append(("AV type approval", details.get("avTypeApproval")))
+        rows.append(("Insurance", details.get("insuranceStatus")))
+        rows.append(("Insurer", details.get("insurer")))
     elif title == "Operator":
         rows.append(("Operator", details.get("operatorName")))
         rows.append(("Licence number", details.get("licenceNumber")))
@@ -87,18 +62,24 @@ def build_check_card(title, check_data):
     elif title == "Zone":
         loc = details.get("location", {})
         if loc:
-            detail_rows.append(
-                detail_row("Location", f"{loc.get('lat')}, {loc.get('lng')}")
-            )
-        detail_rows.append(detail_row("Zone", details.get("zoneName")))
-        detail_rows.append(detail_row("Zone Active", details.get("zoneActive")))
+            rows.append(("Location", f"{loc.get('lat')}, {loc.get('lng')}"))
+        rows.append(("Zone", details.get("zoneName")))
+        rows.append(("Zone active", details.get("zoneActive")))
+
+    children = [
+        html.H2(className="govuk-heading-m", children=[title, " ", govuk_tag(status)]),
+        govuk_summary_list(rows),
+    ]
 
     if reason:
         children.append(
-            html.Div(
-                reason,
-                style={"marginTop": "8px", "fontStyle": "italic", "color": "#856404"},
-            )
+            html.Div(className="govuk-warning-text", children=[
+                html.Span("!", className="govuk-warning-text__icon", **{"aria-hidden": "true"}),
+                html.Strong(className="govuk-warning-text__text", children=[
+                    html.Span("Warning", className="govuk-visually-hidden"),
+                    reason,
+                ]),
+            ])
         )
 
     return html.Div(className="govuk-!-margin-bottom-6", children=children)
@@ -109,50 +90,57 @@ def build_compliance_display(data):
     plate = data.get("plate", "")
     checked_at = data.get("checkedAt", "")
 
-    banner = html.Div(
-        [
-            html.Div(
-                [
-                    html.Span(
-                        data.get("plate", ""),
-                        style={
-                            "fontSize": "24px",
-                            "fontWeight": "bold",
-                            "marginRight": "16px",
-                        },
-                    ),
-                    status_badge(overall),
-                ]
-            ),
-            html.Div(
-                f"Checked at: {data.get('checkedAt', 'N/A')}",
-                style={"fontSize": "12px", "color": "#666", "marginTop": "4px"},
-            ),
-        ],
-        style={
-            "backgroundColor": colours["bg"] + "1a",
-            "border": f"2px solid {colours['bg']}",
-            "borderRadius": "8px",
-            "padding": "16px",
-            "marginBottom": "16px",
-        },
-    )
+    if overall == "PASS":
+        banner = html.Div(className="govuk-panel govuk-panel--confirmation", children=[
+            html.H1(plate, className="govuk-panel__title"),
+            html.Div(className="govuk-panel__body", children=[
+                "Overall status: ", html.Strong("PASS"),
+            ]),
+        ])
+    elif overall == "FAIL":
+        banner = html.Div(className="govuk-error-summary", children=[
+            html.Div(role="alert", children=[
+                html.H2(plate, className="govuk-error-summary__title"),
+                html.Div(className="govuk-error-summary__body", children=[
+                    html.P(["Overall status: ", govuk_tag("FAIL")]),
+                ]),
+            ]),
+        ])
+    elif overall == "NEEDS_REVIEW":
+        banner = html.Div(className="govuk-notification-banner", role="region", children=[
+            html.Div(className="govuk-notification-banner__header", children=[
+                html.H2("Needs review", className="govuk-notification-banner__title"),
+            ]),
+            html.Div(className="govuk-notification-banner__content", children=[
+                html.P(className="govuk-notification-banner__heading", children=[
+                    plate, " — ", govuk_tag("NEEDS_REVIEW"),
+                ]),
+            ]),
+        ])
+    else:
+        banner = html.Div(className="govuk-notification-banner", role="region", children=[
+            html.Div(className="govuk-notification-banner__header", children=[
+                html.H2("Unknown", className="govuk-notification-banner__title"),
+            ]),
+            html.Div(className="govuk-notification-banner__content", children=[
+                html.P(className="govuk-notification-banner__heading", children=[
+                    data.get("message", "Vehicle not found in any register"),
+                ]),
+            ]),
+        ])
 
-    if overall == "UNKNOWN":
-        message = data.get("message", "Vehicle not found in any register")
-        return html.Div(
-            [banner, html.P(message, style={"fontSize": "16px", "color": "#6c757d"})]
-        )
+    result = [
+        banner,
+        html.P(f"Checked at: {checked_at}",
+               className="govuk-body-s govuk-!-margin-top-4"),
+    ]
 
     checks = data.get("checks", {})
-    cards = []
-    for title, key in [
-        ("Registration", "registration"),
-        ("Operator", "operator"),
-        ("Zone", "zone"),
-    ]:
-        if key in checks:
-            cards.append(build_check_card(title, checks[key]))
+    if checks:
+        result.append(html.Hr(className="govuk-section-break govuk-section-break--l govuk-section-break--visible"))
+        for title, key in [("Registration", "registration"), ("Operator", "operator"), ("Zone", "zone")]:
+            if key in checks:
+                result.append(build_check_card(title, checks[key]))
 
     return html.Div(result)
 
@@ -169,69 +157,132 @@ def error_summary(message):
         ]),
     ])
 
-app.layout = html.Div(
-    [
-        html.H1("AV Compliance Checker"),
-        html.Div(
-            [
-                html.Label("License Plate:"),
+
+# --- App setup ---
+
+app = dash.Dash(
+    __name__,
+    external_stylesheets=[GOVUK_CSS],
+    external_scripts=[GOVUK_JS],
+    suppress_callback_exceptions=True,
+    title="AV Licence Checker",
+)
+
+app.layout = html.Div(className="govuk-template__body", children=[
+
+    # --- Header with Tudor Crown ---
+    html.Header(className="govuk-header", role="banner", children=[
+        html.Div(className="govuk-header__container govuk-width-container", children=[
+            html.Div(className="govuk-header__logo", children=[
+                html.A(href="/", className="govuk-header__link govuk-header__logotype", children=[
+                    html.Img(
+                        src="/assets/crown.svg",
+                        className="govuk-header__logotype-crown",
+                        height="30",
+                        width="32",
+                        alt="",
+                    ),
+                    html.Span("GOV.UK", className="govuk-header__logotype-text"),
+                ]),
+            ]),
+        ]),
+    ]),
+
+    # --- Service navigation ---
+    html.Section(className="govuk-service-navigation", children=[
+        html.Div(className="govuk-width-container", children=[
+            html.Div(className="govuk-service-navigation__container", children=[
+                html.Span(className="govuk-service-navigation__service-name", children=[
+                    html.A("AV Licence Checker", href="/", className="govuk-service-navigation__link"),
+                ]),
+            ]),
+        ]),
+    ]),
+
+    # --- Main content ---
+    html.Div(className="govuk-width-container", children=[
+
+        # Phase banner
+        html.Div(className="govuk-phase-banner", children=[
+            html.P(className="govuk-phase-banner__content", children=[
+                html.Strong("Alpha", className="govuk-tag govuk-phase-banner__content__tag"),
+                html.Span(className="govuk-phase-banner__text", children=[
+                    "This is a new service — your feedback will help us improve it.",
+                ]),
+            ]),
+        ]),
+
+        html.Main(className="govuk-main-wrapper", id="main-content", role="main", children=[
+
+            html.H1("Check autonomous vehicle compliance", className="govuk-heading-xl"),
+
+            # --- Form ---
+            html.Div(className="govuk-form-group", children=[
+                html.Label("Vehicle registration number", className="govuk-label govuk-label--m",
+                           htmlFor="license-plate"),
+                html.Div("For example, AV01XYZ", className="govuk-hint"),
                 dcc.Input(
                     id="license-plate",
                     type="text",
-                    placeholder="e.g. AV01XYZ",
-                    style={
-                        "marginRight": "10px",
-                        "marginLeft": "8px",
-                        "padding": "6px",
-                        "fontSize": "16px",
-                    },
+                    className="govuk-input govuk-input--width-10 govuk-input--extra-letter-spacing",
                 ),
-                html.Br(),
-                dcc.Geolocation(id="geolocation"),
-                html.Button("Check Vehicle", id="submit-btn", n_clicks=0),
-            ]
-        ),
-        html.Label(id="location-info"),
-        html.Details(
-            [
-                html.Summary(
-                    "Demo plates",
-                    style={"cursor": "pointer", "marginTop": "12px", "color": "#666"},
-                ),
-                html.Ul(
-                    [
-                        html.Li("AV01XYZ - All checks pass"),
-                        html.Li("AV02ABC - No operator"),
-                        html.Li("AV03DEF - No operator + wrong zone"),
-                        html.Li("AV04GHI - Expired MOT"),
-                        html.Li("AV05JKL - Wrong zone"),
-                        html.Li("AV06MNO - Needs review (insurance pending)"),
-                    ],
-                    style={"fontSize": "14px", "color": "#555"},
-                ),
-            ]
-        ),
-        html.Div(id="output", style={"marginTop": "20px"}),
-    ],
-    style={
-        "fontFamily": "Arial, sans-serif",
-        "maxWidth": "700px",
-        "margin": "0 auto",
-        "padding": "20px",
-    },
-)
+            ]),
+
+            # Geolocation
+            dcc.Geolocation(id="geolocation"),
+            html.P(id="location-info", className="govuk-body-s"),
+
+            html.Button("Check vehicle", id="submit-btn", n_clicks=0,
+                        className="govuk-button govuk-button--start",
+                        **{"data-module": "govuk-button"}),
+
+            # Demo plates
+            html.Details(className="govuk-details", children=[
+                html.Summary(className="govuk-details__summary", children=[
+                    html.Span("Demo registration numbers", className="govuk-details__summary-text"),
+                ]),
+                html.Div(className="govuk-details__text", children=[
+                    html.Ul(className="govuk-list govuk-list--bullet", children=[
+                        html.Li("AV01XYZ — All checks pass"),
+                        html.Li("AV02ABC — No operator"),
+                        html.Li("AV03DEF — No operator + wrong zone"),
+                        html.Li("AV04GHI — Expired MOT"),
+                        html.Li("AV05JKL — Wrong zone"),
+                        html.Li("AV06MNO — Needs review (insurance pending)"),
+                    ]),
+                ]),
+            ]),
+
+            # --- Results ---
+            html.Div(id="output", className="govuk-!-margin-top-6"),
+
+        ]),
+    ]),
+
+    # --- Footer ---
+    html.Footer(className="govuk-footer", role="contentinfo", children=[
+        html.Div(className="govuk-width-container", children=[
+            html.Div(className="govuk-footer__meta", children=[
+                html.Div(className="govuk-footer__meta-item govuk-footer__meta-item--grow", children=[
+                    html.Span("Built by the AI Lab Hackathon team",
+                              className="govuk-footer__licence-description"),
+                ]),
+            ]),
+        ]),
+    ]),
+])
+
 
 @app.callback(
-        Output("location-info", "children"),
-        Input("submit-btn", "n_clicks"),
-        Input("geolocation", "local_date"),
-        Input("geolocation", "position"),
+    Output("location-info", "children"),
+    Input("submit-btn", "n_clicks"),
+    Input("geolocation", "local_date"),
+    Input("geolocation", "position"),
 )
 def check_location(n_clicks, date, pos):
     if pos is None:
         return "Location data not available. Please allow location access and try again."
-
-    return f"As of {date} your location was: lat {pos['lat']},lon {pos['lon']}"
+    return f"As of {date} your location was: lat {pos['lat']}, lon {pos['lon']}"
 
 
 @app.callback(
@@ -248,10 +299,7 @@ def check_compliance(n_clicks, plate):
     try:
         resp = requests.get(f"{COMPLIANCE_API_URL}/compliance/{normalised}", timeout=10)
     except requests.exceptions.ConnectionError:
-        return html.Div(
-            "Could not connect to the compliance API. Is it running?",
-            style={"color": "red"},
-        )
+        return error_summary("Could not connect to the compliance API. Is it running on port 3003?")
     except requests.exceptions.Timeout:
         return error_summary("The compliance API did not respond in time.")
 

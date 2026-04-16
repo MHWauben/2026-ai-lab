@@ -20,6 +20,7 @@ functions:
 
 custom:
   serverless-offline:
+    httpPort: 3003
     noPrependStageInUrl: true
     allowCache: true
 

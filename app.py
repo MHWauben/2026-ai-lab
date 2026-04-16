@@ -7,6 +7,7 @@ load_geofence_data()
 
 app = dash.Dash(__name__)
 
+
 app.layout = html.Div([
     html.H1("Vehicle Location Checker"),
     html.Div([
@@ -67,5 +68,5 @@ def check_location(n_clicks, plate, lat, lon):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run(host='0.0.0.0', debug=True, port=8050)
 

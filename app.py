@@ -67,7 +67,7 @@ def build_check_card(title, check_data, pos = []):
         rows.append(("Zone", details.get("zoneName")))
         rows.append(("Zone active", details.get("zoneActive")))
         if isinstance(pos, list):
-            if is_point_in_geofence(pos.get("lat"), pos.get("lon"), loc.get("polygon")):
+            if is_point_in_geofence(pos['lat'], pos['lon'], loc.get("polygon")):
                 location_check = "Yes"
             else:
                 location_check = "No"

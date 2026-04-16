@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AV Compliance Checker — Presentation</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" />
+  <style>
+    /* ── Brand tokens ─────────────────────────────────────── */
+    :root {
+      --gov-blue:       #1d70b8;
+      --gov-blue-dark:  #003078;
+      --gov-yellow:     #fd0;
+      --gov-green:      #00703c;
+      --gov-red:        #d4351c;
+      --gov-orange:     #f47738;
+      --gov-grey-light: #f3f2f1;
+      --gov-grey:       #b1b4b6;
+      --white:          #ffffff;
+      --ink:            #0b0c0c;
+    }
+
+    /* ── Base overrides ───────────────────────────────────── */
+    .reveal-viewport { background: #0b0c0c; }
+
+    .reveal {
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 36px;
+      color: var(--white);
+    }
+
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: "Segoe UI", Arial, sans-serif;
+      letter-spacing: -0.01em;
+      text-transform: none;
+      color: var(--white);
+    }
+
+    .reveal h1 { font-size: 2.0em; line-height: 1.1; }
+    .reveal h2 { font-size: 1.4em; color: var(--gov-yellow); margin-bottom: 0.5em; }
+    .reveal h3 { font-size: 1.0em; color: var(--gov-grey); font-weight: 400; }
+
+    .reveal section { padding: 0 2rem; }
+    .reveal ul, .reveal ol { text-align: left; }
+    .reveal li { margin: 0.35em 0; line-height: 1.4; }
+    .reveal p { margin: 0.4em 0; }
+    .reveal strong { color: var(--gov-yellow); }
+    .reveal a { color: var(--gov-blue); }
+    .reveal pre { font-size: 0.52em; border-radius: 6px; }
+    .reveal code { background: #1a1a2e; padding: 0.1em 0.3em; border-radius: 3px; font-size: 0.9em; }
+
+    /* ── Slide backgrounds ────────────────────────────────── */
+    .slide-title    { background: linear-gradient(145deg, #003078 0%, #1d70b8 100%) !important; }
+    .slide-problem  { background: #0b0c0c !important; }
+    .slide-dark     { background: #111827 !important; }
+    .slide-blue     { background: linear-gradient(160deg, #003078 0%, #0c2340 100%) !important; }
+    .slide-mid      { background: #0f1923 !important; }
+
+    /* ── Crown bar (appears on every slide) ──────────────── */
+    .crown-bar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 8px;
+      background: var(--gov-yellow);
+      z-index: 999;
+    }
+
+    /* ── Tags / pills ─────────────────────────────────────── */
+    .tag {
+      display: inline-block;
+      padding: 0.15em 0.55em;
+      border-radius: 3px;
+      font-size: 0.55em;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      vertical-align: middle;
+      margin: 0 0.2em;
+    }
+    .tag-pass   { background: var(--gov-green); color: #fff; }
+    .tag-fail   { background: var(--gov-red); color: #fff; }
+    .tag-review { background: var(--gov-orange); color: #fff; }
+    .tag-info   { background: var(--gov-blue); color: #fff; }
+    .tag-grey   { background: #333; color: #ccc; }
+
+    /* ── Stats grid ────────────────────────────────────────── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+      margin-top: 1.2rem;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 1.1rem 0.8rem;
+      text-align: center;
+    }
+    .stat-card .num {
+      font-size: 2.2em;
+      font-weight: 700;
+      color: var(--gov-yellow);
+      display: block;
+      line-height: 1;
+    }
+    .stat-card .label {
+      font-size: 0.5em;
+      color: var(--gov-grey);
+      margin-top: 0.4em;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Three-column check cards ─────────────────────────── */
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .check-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      padding: 1.1rem 0.9rem;
+      border-top: 4px solid var(--gov-blue);
+      text-align: center;
+    }
+    .check-card.green { border-top-color: var(--gov-green); }
+    .check-card.yellow { border-top-color: var(--gov-yellow); }
+    .check-card.blue { border-top-color: var(--gov-blue); }
+    .check-card .icon { font-size: 1.8em; display: block; margin-bottom: 0.3em; }
+    .check-card h4 {
+      margin: 0.2em 0 0.4em;
+      font-size: 0.6em;
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .check-card p {
+      font-size: 0.45em;
+      color: var(--gov-grey);
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    /* ── User persona cards ───────────────────────────────── */
+    .persona-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 0.8rem;
+    }
+    .persona-card {
+      background: rgba(255,255,255,0.05);
+      border-left: 4px solid var(--gov-blue);
+      border-radius: 0 8px 8px 0;
+      padding: 0.7rem 0.9rem;
+      text-align: left;
+    }
+    .persona-card .role {
+      font-size: 0.5em;
+      font-weight: 700;
+      color: var(--gov-yellow);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .persona-card .need {
+      font-size: 0.45em;
+      color: #d0d0d0;
+      margin-top: 0.3em;
+      line-height: 1.4;
+    }
+
+    /* ── Architecture flow ────────────────────────────────── */
+    .arch-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+    .arch-box {
+      background: rgba(29,112,184,0.2);
+      border: 1px solid var(--gov-blue);
+      border-radius: 6px;
+      padding: 0.5rem 0.8rem;
+      font-size: 0.48em;
+      text-align: center;
+      min-width: 5rem;
+    }
+    .arch-box.highlight {
+      background: rgba(29,112,184,0.5);
+      border-color: var(--gov-yellow);
+    }
+    .arch-arrow { font-size: 0.7em; color: var(--gov-grey); }
+
+    /* ── Operator status table ────────────────────────────── */
+    .status-table {
+      font-size: 0.45em;
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.8rem;
+    }
+    .status-table th {
+      background: rgba(255,255,255,0.1);
+      padding: 0.5em 0.8em;
+      text-align: left;
+      font-weight: 700;
+      color: var(--gov-yellow);
+      border-bottom: 2px solid rgba(255,255,255,0.2);
+    }
+    .status-table td {
+      padding: 0.45em 0.8em;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      color: #d0d0d0;
+    }
+    .status-table tr:last-child td { border-bottom: none; }
+
+    /* ── Quote slide ──────────────────────────────────────── */
+    blockquote {
+      font-size: 1.4em !important;
+      font-style: italic;
+      color: var(--gov-yellow) !important;
+      border: none !important;
+      background: none !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      line-height: 1.3;
+      margin: 0.4em auto !important;
+    }
+    blockquote::before { content: "\201C"; }
+    blockquote::after  { content: "\201D"; }
+    .quote-attr { font-size: 0.45em; color: var(--gov-grey); margin-top: 0.6em; }
+
+    /* ── Slide number ─────────────────────────────────────── */
+    .reveal .slide-number { color: var(--gov-grey); font-size: 0.55em; bottom: 1em; right: 1em; }
+
+    /* ── Gov watermark on title ───────────────────────────── */
+    .gov-stamp {
+      font-size: 0.35em;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.4);
+      margin-top: 0.5em;
+    }
+
+    /* ── JSON highlight block ─────────────────────────────── */
+    .json-block {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 1em 1.2em;
+      text-align: left;
+      font-size: 0.42em;
+      font-family: "Cascadia Code", "Fira Code", monospace;
+      line-height: 1.6;
+      overflow: hidden;
+    }
+    .json-key   { color: #79c0ff; }
+    .json-str   { color: #a5d6ff; }
+    .json-pass  { color: #3fb950; font-weight: bold; }
+    .json-fail  { color: #f85149; font-weight: bold; }
+    .json-review{ color: #f0883e; font-weight: bold; }
+    .json-num   { color: #79c0ff; }
+
+    /* ── Next steps list ──────────────────────────────────── */
+    .next-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.9rem;
+      margin-top: 1rem;
+      text-align: left;
+    }
+    .next-item {
+      background: rgba(255,255,255,0.04);
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      font-size: 0.48em;
+    }
+    .next-item .title {
+      font-weight: 700;
+      color: var(--gov-yellow);
+      margin-bottom: 0.3em;
+      font-size: 1.05em;
+    }
+    .next-item p { margin: 0; color: #ccc; line-height: 1.4; }
+
+    /* ── Reveal fragment tweaks ───────────────────────────── */
+    .reveal .fragment { opacity: 0.15; }
+    .reveal .fragment.visible { opacity: 1; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 1 — Title
+     ═══════════════════════════════════════════════════════ -->
+<section class="slide-title" data-transition="fade">
+  <div class="crown-bar"></div>
+  <br/>
+  <p class="gov-stamp">UK AI Engineering Lab · 2026 Hackathon</p>
+  <br/>
+  <h1>AV Compliance Checker</h1>
+  <h3 style="margin-top:0.6em; color: rgba(255,255,255,0.6); font-size:0.7em;">
+    Verifying autonomous vehicles on London's streets
+  </h3>
+  <br/>
+  <blockquote style="font-size:0.9em !important; color: var(--gov-yellow) !important;">
+    Don't make autonomous vehicles the lime bikes of the future
+  </blockquote>
+  <br/>
+  <p style="font-size:0.38em; color:rgba(255,255,255,0.35);">
+    Automated Vehicles Act 2024 &nbsp;·&nbsp; CCAV / DVSA / TfL
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 2 — The Problem
+     ═══════════════════════════════════════════════════════ -->
+<section class="slide-problem" data-transition="slide">
+  <div class="crown-bar"></div>
+  <h2>The Problem</h2>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:0.8rem; align-items:center;">
+    <div>
+      <p style="font-size:0.55em; color:#ccc; line-height:1.6;">
+        Fully autonomous vehicles are appearing on London streets under the 
+        <strong>Automated Vehicles Act 2024</strong>.
+      </p>
+      <br/>
+      <p style="font-size:0.55em; color:#ccc; line-height:1.6;">
+        A member of the public, TfL officer, or inspector sees a vehicle parked — 
+        and has <strong>no single way</strong> to verify:
+      </p>
+      <ul style="font-size:0.48em; color:#ccc; margin-top:0.6em;">
+        <li>Is the vehicle <strong>registered and compliant</strong>?</li>
+        <li>Is there a <strong>licensed operator</strong> accountable?</li>
+        <li>Is it <strong>authorised to be here</strong>?</li>
+      </ul>
+    </div>
+    <div style="text-align:center;">
+      <img src="images/abandoned-autonomous-vehicles.jpg"
+           style="max-height:340px; border-radius:10px; opacity:0.85; width:100%; object-fit:cover;"
+           alt="Autonomous vehicles on London streets" />
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 3 — Who Uses This?
+     ═══════════════════════════════════════════════════════ -->
+<section class="slide-dark" data-transition="slide">
+  <div class="crown-bar"></div>
+  <h2>Who Uses This?</h2>
+  <div class="persona-grid">
+    <div class="persona-card">
+      <div class="role">🏛 TfL Compliance Officer</div>
+      <div class="need">Instant pass/fail with evidence trail — no manual register trawling.</div>
+    </div>
+    <div class="persona-card" style="border-left-color: var(--gov-green);">
+      <div class="role">🛡 Public Safety Inspector</div>
+      <div class="need">Confirm a valid licensed operator is accountable for the vehicle.</div>
+    </div>
+    <div class="persona-card" style="border-left-color: var(--gov-orange);">
+      <div class="role">🚦 Traffic Management</div>
+      <div class="need">Verify the vehicle is in a TfL-designated AV operation zone.</div>
+    </div>
+    <div class="persona-card" style="border-left-color: var(--gov-grey);">
+      <div class="role">👤 Member of the Public</div>
+      <div class="need">Quick green/red legitimacy check — with a one-tap report action.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 4 — The AV Act 2024
+     ═══════════════════════════════════════════════════════ -->
+<section class="slide-blue" data-transition="slide">
+  <div class="crown-bar"></div>
+  <h2>Context: AV Act 2024</h2>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:0.6rem; align-items:start;">
+    <div>
+      <p style="font-size:0.48em; color:#ccc; line-height:1.6;">
+        The <strong>Automated Vehicles Act 2024 (c.13)</strong> is the primary UK legislation 
+        governing self-driving vehicles.
+      </p>
+      <br/>
+      <p style="font-size:0.45em; color:var(--gov-yellow); margin-bottom:0.3em; font-weight:700;">
+        NUIC — No User In Control
+      </p>
+      <p style="font-size:0.43em; color:#ccc; line-height:1.5;">
+        Operators of fully autonomous vehicles where no human is in control. 
+        Licensed by the <strong>Secretary of State</strong> via CCAV — 
+        separate from (but alongside) a TfL Private Hire Operator licence.
+      </p>
+    </div>
+    <div>
+      <table class="status-table">
+        <thead>
+          <tr><th>Licence Status</th><th>Meaning</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="tag tag-pass">Active</span></td><td>Fully licensed, vehicles may operate</td></tr>
+          <tr><td><span class="tag tag-review">Under Review</span></td><td>Operations restricted pending CCAV review</td></tr>
+          <tr><td><span class="tag tag-fail">Suspended</span></td><td>Operations must cease immediately</td></tr>
+          <tr><td><span class="tag tag-grey">Revoked</span></td><td>Licence void — vehicles seized</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:0.38em; color:var(--gov-grey); margin-top:0.6em;">
+        Source: Synthetic NUIC operator registry — 14 operators, modelled on AV Act 2024 framework
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 5 — The Three Checks
+     ═══════════════════════════════════════════════════════ -->
+<section class="slide-dark" data-transition="slide">
+  <div class="crown-bar"></div>
+  <h2>One Input. Three Checks.</h2>
+  <p style="font-size:0.48em; color:#aaa; margin-bottom:0.2em;">
+    Enter a <strong>UK licence plate</strong> — the checker resolves all three simultaneously.
+  </p>
+
+  <div class="check-grid">
+    <div class="check-card green">
+      <span class="icon">🚗</span>
+      <h4>Vehicle Registration</h4>
+      <p>
+        DVSA registration &amp; MOT status<br/>
+        AV type approval (UKAV-NNNN)<br/>
+        Insurance status
+      </p>
+    </div>
+    <div class="check-card yellow">
+      <span class="icon">🏢</span>
+      <h4>Licensed Operator</h4>
+      <p>
+        NUIC licence (CCAV)<br/>
+        TfL Private Hire Operator licence<br/>
+        Authorised for AV operations
+      </p>
+    </div>
+    <div class="check-card blue">
+      <span class="icon">📍</span>
+      <h4>TfL Zone</h4>
+      <p>
+        Within a designated AV zone<br/>
+        Zone currently active<br/>
+        Correct operator type permitted
+      </p>
+    </div>
+  </div>
+
+  <div style="margin-top:1.2rem; display:flex; justify-content:center; gap:0.8rem; flex-wrap:wrap;">
+    <span class="tag tag-pass" style="font-size:0.55em;">✓ PASS</span>
+    <span class="tag tag-fail" style="font-size:0.55em;">✗ FAIL</span>
+    <span class="tag tag-review" style="font-size:0.55em;">⚠ NEEDS REVIEW</span>
+    <span class="tag tag-grey" style="font-size:0.55em;">? UNKNOWN</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 6 — How It Works (Flow)
+     ═══════════════════════════════════════════════════════ -->
+<section class="slide-mid" data-transition="slide">
+  <div class="crown-bar"></div>
+  <h2>How It Works</h2>
+
+  <div class="arch-flow">
+    <div class="arch-box highlight" style="background:rgba(253,221,0,0.15); border-color:var(--gov-yellow);">
+      <strong style="color:var(--gov-yellow);">Licence plate</strong><br/>
+      <span style="color:#aaa;">e.g. EK24 AVM</span>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box highlight">
+      Compliance<br/>Service
+    </div>
+    <div class="arch-arrow">⇉</div>
+    <div style="display:flex; flex-direction:column; gap:0.4rem;">
+      <div class="arch-box green" style="border-color:var(--gov-green);">Registration<br/>check</div>
+      <div class="arch-box yellow" style="border-color:var(--gov-yellow);">Operator<br/>check</div>
+      <div class="arch-box blue">Zone<br/>check</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box highlight">
+      Overall<br/>result
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box" style="border-color:var(--gov-green); background:rgba(0,112,60,0.2);">
+      Report<br/>action
+    </div>
+  </div>
+
+  <div style="margin-top:1.2rem; display:grid; grid-template-columns:repeat(3,1fr); gap:0.8rem; font-size:0.43em; color:#aaa; text-align:center;">
+    <div>
+      <strong style="color:#fff; display:block; margin-bottom:0.2em;">FAIL</strong>
+      Any single check fails → overall FAIL.<br/>
+      <span style="color:var(--gov-red);">All three must pass.</span>
+    </div>
+    <div>
+      <strong style="color:#fff; display:block; margin-bottom:0.2em;">NEEDS REVIEW</strong>
+      No failures, but something needs<br/>
+      attention (e.g. licence expiring soon).
+    </div>
+    <div>
+      <strong style="color:#fff; display:block; margin-bottom:0.2em;">UNKNOWN</strong>
+      Plate not found in any register —<br/>
+      vehicle may not be NUIC-registered.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 7 — The Data
+     ═══════════════════════════════════════════════════════ -->
+<section class="slide-blue" data-transition="slide">
+  <div class="crown-bar"></div>
+  <h2>The Dataset</h2>
+  <p style="font-size:0.46em; color:#bbb;">Synthetic NUIC operator records modelled on the AV Act 2024 regulatory framework.</p>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="num">14</span>
+      <span class="label">NUIC operators</span>
+    </div>
+    <div class="stat-card">
+      <span class="num">34</span>
+      <span class="label">registered vehicles</span>
+    </div>
+    <div class="stat-card">
+      <span class="num">10</span>
+      <span class="label">TfL AV zones</span>
+    </div>
+    <div class="stat-card">
+      <span class="num">9</span>
+      <span class="label">active operators</span>
+    </div>
+    <div class="stat-card">
+      <span class="num">23</span>
+      <span class="label">active vehicles</span>
+    </div>
+    <div class="stat-card">
+      <span class="num">7</span>
+      <span class="label">active zones</span>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:0.6rem; flex-wrap:wrap; justify-content:center; margin-top:1rem; font-size:0.4em; color:#aaa;">
+    <span>📍 Canary Wharf</span>
+    <span>·</span>
+    <span>✈️ Heathrow</span>
+    <span>·</span>
+    <span>🏟 Stratford</span>
+    <span>·</span>
+    <span>🚉 King's Cross</span>
+    <span>·</span>
+    <span>🎭 South Bank</span>
+    <span>·</span>
+    <span>🔵 White City</span>
+    <span>·</span>
+    <span>🚢 Royal Docks</span>
+    <span>·</span>
+    <span>🌊 Greenwich</span>
+  </div>
+
+  <div style="display:flex; gap:0.8rem; justify-content:center; margin-top:0.8rem;">
+    <span class="tag tag-pass">9 active</span>
+    <span class="tag tag-review">2 under review</span>
+    <span class="tag tag-fail">2 suspended</span>
+    <span class="tag tag-grey">1 revoked</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 8 — API Response
+     ═══════════════════════════════════════════════════════ -->
+<section class="slide-dark" data-transition="slide">
+  <div class="crown-bar"></div>
+  <h2>API Response</h2>
+  <p style="font-size:0.44em; color:#bbb;">
+    <code style="color:var(--gov-yellow);">GET /compliance/EK24AVM</code>
+    &nbsp;→&nbsp; active vehicle, active operator, active zone
+  </p>
+
+  <div class="json-block">
+<span class="json-key">"plate"</span>: <span class="json-str">"EK24 AVM"</span>,
+<span class="json-key">"checkedAt"</span>: <span class="json-str">"2026-04-16T13:00:00.000Z"</span>,
+<span class="json-key">"overallStatus"</span>: <span class="json-pass">"PASS"</span>,
+<span class="json-key">"checks"</span>: {
+  <span class="json-key">"registration"</span>: { <span class="json-key">"status"</span>: <span class="json-pass">"PASS"</span>, <span class="json-key">"details"</span>: { <span class="json-key">"make"</span>: <span class="json-str">"Wayve"</span>, <span class="json-key">"model"</span>: <span class="json-str">"AV1 Saloon"</span>, <span class="json-key">"avTypeApproval"</span>: <span class="json-str">"UKAV-2024-001"</span>, <span class="json-key">"insuranceStatus"</span>: <span class="json-pass">"ACTIVE"</span> } },
+  <span class="json-key">"operator"</span>:  { <span class="json-key">"status"</span>: <span class="json-pass">"PASS"</span>, <span class="json-key">"details"</span>: { <span class="json-key">"operatorName"</span>: <span class="json-str">"Meridian Autonomous Mobility Ltd"</span>, <span class="json-key">"licenceNumber"</span>: <span class="json-str">"PHV/OP/00412"</span>, <span class="json-key">"avAuthorised"</span>: <span class="json-str">true</span> } },
+  <span class="json-key">"zone"</span>:      { <span class="json-key">"status"</span>: <span class="json-pass">"PASS"</span>, <span class="json-key">"details"</span>: { <span class="json-key">"zoneName"</span>: <span class="json-str">"Canary Wharf Central"</span>, <span class="json-key">"zoneActive"</span>: <span class="json-str">true</span> } }
+}
+  </div>
+
+  <div style="margin-top:0.7rem; font-size:0.4em; color:#888; display:flex; gap:1.5rem; justify-content:center;">
+    <span><code>EK24 ANA</code> → <span class="tag tag-fail">FAIL</span> revoked operator, void insurance</span>
+    <span><code>FA25 AVF</code> → <span class="tag tag-fail">FAIL</span> suspended operator</span>
+    <span><code>EY25 AVC</code> → <span class="tag tag-review">NEEDS REVIEW</span> under investigation</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 9 — What's Next
+     ═══════════════════════════════════════════════════════ -->
+<section class="slide-blue" data-transition="slide">
+  <div class="crown-bar"></div>
+  <h2>What's Next</h2>
+
+  <div class="next-grid">
+    <div class="next-item">
+      <div class="title">🔌 Live API Integration</div>
+      <p>Replace mock data with real DVSA MOT History and DVLA Vehicle Enquiry Service API and TfL Unified API calls.</p>
+    </div>
+    <div class="next-item">
+      <div class="title">🗺 Real TfL Zone Boundaries</div>
+      <p>Swap synthetic GeoJSON polygons for live TfL-designated AV zone data from OS Data Hub.</p>
+    </div>
+    <div class="next-item">
+      <div class="title">📱 Mobile-First Public UI</div>
+      <p>QR code on each vehicle → instant check on a phone. One-tap report for non-compliant vehicles.</p>
+    </div>
+    <div class="next-item">
+      <div class="title">🏛 CCAV Registry Link</div>
+      <p>Direct integration with CCAV NUIC operator register when the public API becomes available.</p>
+    </div>
+  </div>
+
+  <p style="font-size:0.4em; color:var(--gov-grey); margin-top:1.2rem; text-align:center;">
+    Scoped to London (TfL jurisdiction) · Built under the Automated Vehicles Act 2024 c.13
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 10 — Edge Cases
+     ═══════════════════════════════════════════════════════ -->
+<section class="slide-dark" data-transition="slide">
+  <div class="crown-bar"></div>
+  <h2>Edge Cases</h2>
+
+  <p style="font-size:0.5em; color:var(--gov-yellow); font-weight:700; margin-bottom:0.6em;">Alternative Input: Imagery &amp; ANPR</p>
+  <ul style="font-size:0.42em; color:#ccc; line-height:1.8; max-width:80%; margin:0 auto; text-align:left;">
+    <li>Members of the public may not know or want to type a licence plate</li>
+    <li>Use <strong>phone camera imagery</strong> as input — snap a photo of the vehicle</li>
+    <li><strong>ANPR</strong> (Automatic Number Plate Recognition) extracts the plate automatically</li>
+    <li>Enables integration with <strong>existing CCTV / traffic camera</strong> infrastructure</li>
+    <li>Opens the door to <strong>bulk / automated compliance sweeps</strong> across zones</li>
+  </ul>
+
+  <p style="font-size:0.38em; color:rgba(255,255,255,0.5); margin-top:1.2em;">
+    Camera input lowers the barrier for public reporting and scales enforcement beyond manual checks
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 11 — Thank You / Demo
+     ═══════════════════════════════════════════════════════ -->
+<section class="slide-title" data-transition="fade">
+  <div class="crown-bar"></div>
+  <br/>
+  <h1 style="font-size:1.6em;">Live Demo</h1>
+  <br/>
+  <div style="display:flex; gap:1.2rem; justify-content:center; flex-wrap:wrap; font-size:0.44em; color:#ccc; margin-bottom:1.2rem;">
+    <span>🌐 <code style="color:var(--gov-yellow);">GET /compliance/:plate</code></span>
+    <span>·</span>
+    <span>📝 <code style="color:var(--gov-yellow);">POST /compliance/report</code></span>
+    <span>·</span>
+    <span>ℹ️ <code style="color:var(--gov-yellow);">GET /version</code></span>
+  </div>
+  <hr style="border:none; border-top:1px solid rgba(255,255,255,0.15); margin:0.8em 3em;" />
+  <br/>
+  <p style="font-size:0.42em; color:rgba(255,255,255,0.5);">
+    AV Compliance Checker &nbsp;·&nbsp; UK AI Engineering Lab &nbsp;·&nbsp; 2026 Hackathon
+  </p>
+  <p style="font-size:0.35em; color:rgba(255,255,255,0.25); margin-top:0.4em;">
+    Automated Vehicles Act 2024 c.13 &nbsp;·&nbsp; CCAV · DVSA · TfL
+  </p>
+</section>
+
+</div><!-- /slides -->
+</div><!-- /reveal -->
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    transitionSpeed: 'fast',
+    backgroundTransition: 'fade',
+    center: true,
+    width: 1200,
+    height: 700,
+    margin: 0.06,
+    controls: true,
+    progress: true,
+    history: true,
+    keyboard: true,
+    overview: true,
+    touch: true,
+    plugins: [],
+  });
+</script>
+</body>
+</html>

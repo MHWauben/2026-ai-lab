@@ -128,9 +128,25 @@ app.layout = html.Div([
             placeholder="e.g. AV01XYZ",
             style={"marginRight": "10px", "marginLeft": "8px", "padding": "6px", "fontSize": "16px"},
         ),
-        html.Button("Check Compliance", id="submit-btn", n_clicks=0, style={
-            "padding": "6px 16px", "fontSize": "16px", "cursor": "pointer",
-        }),
+        html.Br(),
+        html.Label("Latitude:"),
+        dcc.Input(
+            id="latitude",
+            type="number",
+            placeholder="Enter latitude",
+            style={"marginRight": "10px"}
+        ),
+        html.Br(),
+        html.Label("Longitude:"),
+        dcc.Input(
+            id="longitude",
+            type="number",
+            placeholder="Enter longitude",
+            style={"marginRight": "10px"}
+        ),
+        html.Br(),
+        html.Br(),
+        html.Button("Check Location", id="submit-btn", n_clicks=0),
     ]),
     html.Details([
         html.Summary("Demo plates", style={"cursor": "pointer", "marginTop": "12px", "color": "#666"}),

@@ -2,6 +2,8 @@
 
 "Don't make autonomous vehicles the lime bikes of the future"
 
+![abandoned autonomous vehicles](images/abandoned-autonomous-vehicles.jpg)
+
 Problem statement: a member of the public sees an autonomous vehicle parked in London. Can we create a single checker to ensure the vehicle is compliant and registered, there is a relevant private hire operator, and it's in a location that TfL has designated as appropriate for autonomous vehicle operation? 
 
 ## User Stories

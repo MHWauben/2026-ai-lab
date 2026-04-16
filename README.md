@@ -2,27 +2,11 @@
 
 "Don't make autonomous vehicles the lime bikes of the future"
 
-## Current Challenges
+Problem statement: a member of the public sees an autonomous vehicle parked in London. Can we create a single checker to ensure the vehicle is compliant and registered, there is a relevant private hire operator, and it's in a location that TfL has designated as appropriate for autonomous vehicle operation? 
 
-- Manual document verification creates bottlenecks and errors
-- Paper-based records are difficult to audit and maintain
-- No standardized digital identity for vehicles
-- Lacks framework for autonomous vehicle registration and liability tracking
+## User Stories
 
-## Proposed Solution
-
-Implement a centralized digital licensing platform that:
-
-- Digitizes all vehicle documentation and enables online verification
-- Creates cryptographically-secure digital vehicle credentials
-- Integrates autonomous vehicle capabilities per AV Act requirements (operational design domain validation, remote disengagement capability tracking)
-- Maintains immutable audit trails for compliance
-- Supports real-time license status checks by law enforcement and third parties
-- Enables seamless license renewal and updates
-
-## Benefits
-
-- Reduced processing time and administrative costs
-- Improved accuracy and fraud prevention
-- Future-ready infrastructure for autonomous vehicle fleet management
-- Enhanced regulatory oversight and accountability
+- As a TfL compliance officer, I want to verify that an autonomous vehicle is registered and compliant so that only authorized vehicles operate in London.
+- As a public safety inspector, I want to confirm the vehicle has a valid private hire operator so that there is accountability for the vehicle's operations.
+- As a traffic management official, I want to check that the vehicle is parked in a TfL-designated autonomous vehicle zone so that operations are restricted to approved areas.
+- As a member of the public, I want to quickly identify whether a parked autonomous vehicle is legitimate so that I can report concerns if it isn't.
